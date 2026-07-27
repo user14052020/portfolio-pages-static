@@ -8,6 +8,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 BASE = "https://maharram.ru"
+EXCLUDED_PROJECT_LINK_HOSTS = {"1c.maharram.ru"}
 ROOT = Path(r"C:\dev\self\portfolio\pages-static").resolve()
 EXPECTED = Path(r"C:\dev\self\portfolio\pages-static").resolve()
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36"
@@ -233,6 +234,85 @@ def dump_json(rel: str, payload) -> None:
     write_file(rel, json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8"))
 
 
+def project_uses_excluded_link(project: dict) -> bool:
+    for key in ("live_url", "repository_url"):
+        value = project.get(key)
+        if not isinstance(value, str) or not value:
+            continue
+        try:
+            host = urllib.parse.urlparse(value).hostname
+        except ValueError:
+            host = None
+        if host and host.lower() in EXCLUDED_PROJECT_LINK_HOSTS:
+            return True
+    return False
+
+
+def filter_projects(projects: list[dict]) -> tuple[list[dict], set[str]]:
+    included: list[dict] = []
+    excluded_slugs: set[str] = set()
+    for project in projects:
+        slug = str(project.get("slug") or "")
+        if project_uses_excluded_link(project):
+            if slug:
+                excluded_slugs.add(slug)
+            continue
+        included.append(project)
+    return included, excluded_slugs
+
+
+def remove_project_object_from_rsc_payload(html: str, slug: str) -> str:
+    token = f'\\"slug\\":\\"{slug}\\"'
+    start_token = '{\\"created_at\\"'
+    cursor = 0
+    while True:
+        slug_index = html.find(token, cursor)
+        if slug_index == -1:
+            return html
+        start = html.rfind(start_token, 0, slug_index)
+        if start == -1:
+            cursor = slug_index + len(token)
+            continue
+
+        depth = 0
+        end = None
+        for index in range(start, len(html)):
+            char = html[index]
+            if char == "{":
+                depth += 1
+            elif char == "}":
+                depth -= 1
+                if depth == 0:
+                    end = index + 1
+                    break
+        if end is None:
+            return html
+
+        remove_start = start
+        remove_end = end
+        if remove_start > 0 and html[remove_start - 1] == ",":
+            remove_start -= 1
+        elif remove_end < len(html) and html[remove_end] == ",":
+            remove_end += 1
+        html = html[:remove_start] + html[remove_end:]
+        cursor = remove_start
+
+
+def patch_project_counts(html: str, projects: list[dict]) -> str:
+    one_c_count = sum(
+        1
+        for project in projects
+        if (project.get("showcase_meta") or {}).get("project_type") == "one_c"
+    )
+    return html.replace(">5<!-- --> <!-- -->", f">{one_c_count}<!-- --> <!-- -->", 1)
+
+
+def patch_homepage_html(html: str, projects: list[dict], excluded_slugs: set[str]) -> str:
+    for slug in sorted(excluded_slugs):
+        html = remove_project_object_from_rsc_payload(html, slug)
+    return patch_project_counts(html, projects)
+
+
 def queue_project_media(project: dict) -> None:
     for key in ("cover_image", "preview_video_url"):
         value = project.get(key)
@@ -245,6 +325,10 @@ def queue_project_media(project: dict) -> None:
 
 
 def main() -> None:
+    fetched_settings = fetch_json("/api/v1/site-settings/")
+    fetched_projects = fetch_json("/api/v1/projects/?featured_only=true")
+    fetched_reviews_page = fetch_json("/api/v1/reviews/?offset=0&limit=100")
+
     for rel in (
         "_next",
         "media",
@@ -261,9 +345,9 @@ def main() -> None:
     ):
         safe_remove(rel)
 
-    settings = fetch_json("/api/v1/site-settings/")
-    projects = fetch_json("/api/v1/projects/?featured_only=true")
-    reviews_page = fetch_json("/api/v1/reviews/?offset=0&limit=100")
+    settings = fetched_settings
+    projects, excluded_slugs = filter_projects(fetched_projects)
+    reviews_page = fetched_reviews_page
     reviews = reviews_page.get("items", reviews_page if isinstance(reviews_page, list) else [])
 
     for project in projects:
@@ -278,7 +362,10 @@ def main() -> None:
     for path, rel in routes:
         url = BASE + path
         data, _ = request_bytes(url, tries=3)
-        html = inject_runtime(data.decode("utf-8"))
+        html = data.decode("utf-8")
+        if path == "/":
+            html = patch_homepage_html(html, projects, excluded_slugs)
+        html = inject_runtime(html)
         route_html[path] = html
         write_file(rel, html.encode("utf-8"))
         parse_refs(html, url, "text/html")
@@ -329,6 +416,7 @@ def main() -> None:
     print(json.dumps({
         "routes": len(routes),
         "projects": len(projects),
+        "excluded": sorted(excluded_slugs),
         "reviews": len(reviews),
         "assets": len(downloaded),
         "errors": errors[:20],

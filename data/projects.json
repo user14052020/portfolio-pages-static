@@ -366,38 +366,6 @@
     ]
   },
   {
-    "created_at": "2026-06-04T18:38:00.854011Z",
-    "updated_at": "2026-06-04T18:39:14.551070Z",
-    "id": 19,
-    "slug": "cad",
-    "title_ru": "САПР",
-    "title_en": "CAD",
-    "summary_ru": "1С",
-    "summary_en": "1S",
-    "description_ru": "Конфигурация позволяет загружать файлы спецификаций из САПР систем",
-    "description_en": "The configuration allows you to upload specification files from CAD systems",
-    "stack": [],
-    "showcase_meta": {
-      "project_type": "one_c",
-      "media_mode": "demo",
-      "visual_variant": "uploaded-media",
-      "video_duration": "0:40"
-    },
-    "cover_image": "/media/uploads/c8/d2a5e4db00fc4f67b0ccbdb5754734fe.png",
-    "preview_video_url": null,
-    "repository_url": null,
-    "live_url": "https://1c.maharram.ru/custom-kwork-tati4mem/",
-    "page_scene_key": null,
-    "seo_title_ru": null,
-    "seo_title_en": null,
-    "seo_description_ru": null,
-    "seo_description_en": null,
-    "sort_order": 3,
-    "is_featured": true,
-    "is_published": true,
-    "media_items": []
-  },
-  {
     "created_at": "2026-06-18T14:33:38.491531Z",
     "updated_at": "2026-06-18T15:28:30.317955Z",
     "id": 24,
@@ -494,38 +462,6 @@
         "sort_order": 2
       }
     ]
-  },
-  {
-    "created_at": "2026-05-28T19:41:36.311149Z",
-    "updated_at": "2026-06-04T19:44:31.586000Z",
-    "id": 14,
-    "slug": "1c-mobile-manager",
-    "title_ru": "МОБИЛЬНЫЙ",
-    "title_en": "REMOTE ACCESS",
-    "summary_ru": "1С ",
-    "summary_en": "1S",
-    "description_ru": "Для удобной удалённой работы менеджеров с базой 1С на телефоне или планшете было разработано расширение, предоставляющее доступ к ключевым операционным функциям для работы с продажами. \n\nДля каждой функции реализован отдельный мобильный интерфейс, адаптированный под небольшие экраны и сценарии использования на мобильных устройствах.",
-    "description_en": "To make it easier for managers to work with the 1C database remotely using their phones or tablets, an extension has been developed that provides access to the main operational functions necessary for working with sales. \n\nEach function has its own interface that is optimized for small mobile screens.",
-    "stack": [],
-    "showcase_meta": {
-      "project_type": "one_c",
-      "media_mode": "demo",
-      "visual_variant": "uploaded-media",
-      "video_duration": "0:40"
-    },
-    "cover_image": "/media/uploads/9d/dffcdb1808bb46a5bd802b9dd0a45e86.png",
-    "preview_video_url": null,
-    "repository_url": null,
-    "live_url": "https://1c.maharram.ru/ut/en_GB/",
-    "page_scene_key": null,
-    "seo_title_ru": "1С Мобильный интерфейс для менеджера",
-    "seo_title_en": "1S Mobile interface for the manager",
-    "seo_description_ru": "Для удобства удалённой работы менеджеров с базой 1С с телефонов и планшетов было разработано расширение, предоставляющее доступ к основным операционным функциям, необходимым для работы с продажами. Для каждой функции создан отдельный интерфейс, адаптированный под небольшие экраны мобильных устройств.",
-    "seo_description_en": "To make it easier for managers to work with the 1C database remotely using their phones and tablets, an extension has been developed that provides access to the main operational functions necessary for working with sales. Each function has its own interface that is optimized for small mobile screens.",
-    "sort_order": 5,
-    "is_featured": true,
-    "is_published": true,
-    "media_items": []
   },
   {
     "created_at": "2026-06-18T14:50:50.806572Z",
