@@ -218,8 +218,10 @@ def parse_refs(text: str, source_url: str, content_type: str) -> None:
 
 def inject_runtime(html: str) -> str:
     if 'id="static-pages-runtime"' in html:
-        return html
-    return html.replace("<head>", "<head>" + STATIC_RUNTIME, 1)
+        html = re.sub(r'<script id="static-pages-runtime">.*?</script>', "", html, flags=re.S)
+    if "</body>" in html:
+        return html.replace("</body>", STATIC_RUNTIME + "</body>", 1)
+    return html + STATIC_RUNTIME
 
 
 def fetch_json(path: str):
