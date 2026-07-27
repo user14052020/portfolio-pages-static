@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://maharram.ru/sitemap.xml
