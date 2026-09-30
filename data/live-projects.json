@@ -646,5 +646,101 @@
         "sort_order": 1
       }
     ]
+  },
+  {
+    "created_at": "2026-09-30T09:55:00Z",
+    "updated_at": "2026-09-30T09:55:00Z",
+    "id": 28,
+    "slug": "work-schedule-crm",
+    "title_ru": "ГРАФИК РАБОТ / CRM",
+    "title_en": "WORK SCHEDULE / CRM",
+    "summary_ru": "",
+    "summary_en": "",
+    "description_ru": "Клиент вел график работ сотрудников в Google Таблицах. Потребовалась собственная онлайн-система, в которой сотрудник может быстро увидеть свои смены без лишней информации.\n\nРазработал CRM для планирования работы бригад с разграничением доступа. Каждый сотрудник видит свой график и необходимые сведения по задачам, а руководитель управляет расписанием, составом бригад и справочниками. В системе предусмотрены поиск по работам и объектам, календарь отпусков, архив по годам, журнал изменений и выгрузка данных в XLSX.",
+    "description_en": "The client managed employee schedules in Google Sheets and needed a dedicated online system where each employee could quickly find their own shifts without unrelated information.\n\nI developed a CRM for crew scheduling with role-based access. Employees see their own schedules and the task information they need, while managers maintain schedules, crew assignments and directories. The system includes job and site search, a vacation calendar, yearly archives, an audit log and XLSX exports.",
+    "stack": [
+      "PHP",
+      "JavaScript"
+    ],
+    "showcase_meta": {
+      "project_type": "web",
+      "media_mode": "screenshots",
+      "visual_variant": "dashboard-light",
+      "video_duration": "0:40"
+    },
+    "cover_image": "/media/uploads/work-schedule-crm/01-schedule.png",
+    "preview_video_url": null,
+    "repository_url": null,
+    "live_url": null,
+    "page_scene_key": null,
+    "seo_title_ru": "ГРАФИК РАБОТ / CRM",
+    "seo_title_en": "WORK SCHEDULE / CRM",
+    "seo_description_ru": "Онлайн-система для планирования работы бригад вместо Google Таблиц: личные графики сотрудников, разграничение доступа, отпуска, поиск, архив и журнал изменений.",
+    "seo_description_en": "An online crew scheduling system replacing Google Sheets, with personal employee schedules, role-based access, vacations, search, archives and an audit log.",
+    "sort_order": 7,
+    "is_featured": true,
+    "is_published": true,
+    "media_items": [
+      {
+        "created_at": "2026-09-30T09:55:00Z",
+        "updated_at": "2026-09-30T09:55:00Z",
+        "id": 103,
+        "asset_type": "image",
+        "url": "/media/uploads/work-schedule-crm/01-schedule.png",
+        "alt_ru": "График работ бригад",
+        "alt_en": "Crew work schedule",
+        "sort_order": 1
+      },
+      {
+        "created_at": "2026-09-30T09:55:00Z",
+        "updated_at": "2026-09-30T09:55:00Z",
+        "id": 104,
+        "asset_type": "image",
+        "url": "/media/uploads/work-schedule-crm/02-employees.png",
+        "alt_ru": "Справочник сотрудников",
+        "alt_en": "Employee directory",
+        "sort_order": 2
+      },
+      {
+        "created_at": "2026-09-30T09:55:00Z",
+        "updated_at": "2026-09-30T09:55:00Z",
+        "id": 105,
+        "asset_type": "image",
+        "url": "/media/uploads/work-schedule-crm/03-search.png",
+        "alt_ru": "Поиск по работам и объектам",
+        "alt_en": "Job and site search",
+        "sort_order": 3
+      },
+      {
+        "created_at": "2026-09-30T09:55:00Z",
+        "updated_at": "2026-09-30T09:55:00Z",
+        "id": 106,
+        "asset_type": "image",
+        "url": "/media/uploads/work-schedule-crm/04-vacations.png",
+        "alt_ru": "Календарь отпусков",
+        "alt_en": "Vacation calendar",
+        "sort_order": 4
+      },
+      {
+        "created_at": "2026-09-30T09:55:00Z",
+        "updated_at": "2026-09-30T09:55:00Z",
+        "id": 107,
+        "asset_type": "image",
+        "url": "/media/uploads/work-schedule-crm/05-archive.png",
+        "alt_ru": "Архив графиков по годам",
+        "alt_en": "Yearly schedule archive",
+        "sort_order": 5
+      },
+      {
+        "created_at": "2026-09-30T09:55:00Z",
+        "updated_at": "2026-09-30T09:55:00Z",
+        "id": 108,
+        "asset_type": "image",
+        "url": "/media/uploads/work-schedule-crm/06-audit.png",
+        "alt_ru": "Журнал действий и изменений",
+        "alt_en": "Activity and change log",
+        "sort_order": 6
+      }
+    ]
   }
 ]
