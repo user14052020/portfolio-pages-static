@@ -136,13 +136,14 @@ assert.ok(read('project-previews/furniture-1c.css').includes('@container furnitu
 assert.ok(fs.statSync(path.join(root, 'media/uploads/4e/55fdc83c5782458bbe96e2461e844cf8.png')).size > 100);
 for (const file of ['index.html', '404.html']) {
   const html = read(file);
-  assert.ok(html.includes('src="/project-previews/furniture-1c.js"'));
+  assert.ok(html.includes('src="/project-previews/furniture-1c.js?v=3"'), 'New project data cannot use a cached furniture-only module');
   assert.ok(html.includes('href="/project-previews/furniture-host.css"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))];
   assert.equal(chunks.length, 1);
   const chunk = read('_next/static/chunks/' + chunks[0]);
   assert.equal(chunks[0], `app/page-${crypto.createHash('sha256').update(chunk).digest('hex').slice(0, 16)}.js`);
   for (const tag of ['furniture-1c-preview', 'tm-electronics-preview', 'eicom-shop-preview', 'shifts-crm-preview', 'calls-llm-preview', 'dental-crm-preview']) assert.ok(chunk.includes(tag), tag);
+  assert.ok(chunk.includes('"paints"===n.slug?(0,r.jsx)("furniture-1c-preview",{locale:a,description:m,project:"paints"})'));
 }
 for (const file of ['data/live-projects.json', 'data/projects.json', 'api/v1/projects/index.html', 'api/v1/projects/furniture/index.html']) {
   const data = JSON.parse(read(file));
@@ -152,4 +153,34 @@ for (const file of ['data/live-projects.json', 'data/projects.json', 'api/v1/pro
   assert.ok(project.description_en.includes('existing 1C system'));
 }
 assert.ok(read('projects/furniture/index.html').includes('Клиент обратился за сопровождением 1С'));
-console.log('Furniture / 1C preview checks passed.');
+attrs.project = 'paints';
+assert.equal(preview.orderNumber(), 'К-1024');
+assert.equal(preview.orderNumber(1), 'К-1025');
+for (const locale of ['ru', 'en']) {
+  attrs.locale = locale;
+  preview.render();
+  assert.ok(preview.shadowRoot.innerHTML.includes(locale === 'ru' ? 'КРАСКИ' : 'PAINTS'));
+  assert.equal((preview.shadowRoot.innerHTML.match(/role="tab" /g) || []).length, 5);
+  const scenes = ['bitrix', 'sheets', 'closing', 'delivery', 'maps'].map(name => preview[name]()).join('');
+  assert.ok(scenes.includes(locale === 'ru' ? 'Интерьерная краска, 9 л' : 'Interior paint, 9 L'));
+  assert.ok(scenes.includes(locale === 'ru' ? 'Грунтовка, 5 л' : 'Primer, 5 L'));
+  assert.ok(scenes.includes(locale === 'ru' ? '2 банки краски и грунтовка' : '2 cans of paint and primer'));
+  assert.ok(scenes.includes('/media/uploads/3f/e8f817443c804710b993d6791708a6ee.png'));
+  assert.ok(scenes.includes('К-1024'));
+  assert.ok(!/Стол «Линия»|Кресло «Сфера»|Linea table|Sphere armchair|М-1024|55fdc83c5782458bbe96e2461e844cf8/.test(scenes), 'Paints scenes do not leak furniture data');
+}
+attrs.project = '__proto__';
+assert.equal(preview.project.title[0], 'МЕБЕЛЬ', 'Unknown project attributes fall back to the original profile');
+delete attrs.project;
+attrs.locale = 'ru';
+assert.ok(preview.bitrix().includes('Стол «Линия»'), 'The original furniture preview is retained');
+for (const file of ['data/live-projects.json', 'data/projects.json', 'api/v1/projects/index.html', 'api/v1/projects/paints/index.html']) {
+  const data = JSON.parse(read(file));
+  const project = Array.isArray(data) ? data.find(item => item.slug === 'paints') : data;
+  assert.equal(project.live_url, null);
+  assert.ok(project.description_ru.includes('магазина красок обратился за сопровождением 1С'));
+  assert.ok(project.description_en.includes('paint retailer’s existing 1C system'));
+}
+assert.ok(read('projects/paints/index.html').includes('Клиент магазина красок'));
+assert.ok(fs.statSync(path.join(root, 'media/uploads/3f/e8f817443c804710b993d6791708a6ee.png')).size > 100);
+console.log('Furniture and Paints / 1C preview checks passed.');

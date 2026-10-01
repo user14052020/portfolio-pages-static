@@ -707,8 +707,8 @@
     "title_en": "PAINTS",
     "summary_ru": "МАГАЗИН",
     "summary_en": "SHOP",
-    "description_ru": "Тоже самое, что и в прошлом проекте, выполнено множество задач по 1С необходимых для корректного ведения учета с поправкой на особенности бизнес-модели клиента. ",
-    "description_en": "The same as in the previous project, many 1C tasks have been completed that are necessary for correct accounting, adjusted for the specifics of the client's business model.",
+    "description_ru": "Клиент магазина красок обратился за сопровождением 1С: обмен с сайтом на Битрикс, Google Таблицами и службой доставки, автоматизация закрытия заказов и интеграция Яндекс Карт.",
+    "description_en": "Supported a paint retailer’s existing 1C system: data exchange with a Bitrix store, Google Sheets and a delivery service, automated order closing and Yandex Maps integration.",
     "stack": [
       "1С"
     ],

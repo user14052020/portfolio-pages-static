@@ -37,7 +37,7 @@ node scripts/check-dental-preview.cjs
 
 ## Calls / LLM Showcase
 
-All six animated project previews share `project-previews/preview-styles.js`.
+All seven animated project previews share `project-previews/preview-styles.js`.
 Shadow-root stylesheets are retained across renders. An inline paint gate keeps
 content hidden and unfocusable until every required stylesheet has loaded, with
 a bounded loading placeholder and an explicit retry state on network errors.
@@ -106,3 +106,17 @@ with `apps/frontend/public/project-previews/`. The source React wrapper is
 ```powershell
 node scripts/check-furniture-preview.cjs
 ```
+
+## Paints / 1C Support Showcase
+
+The `paints` project reuses the five-task 1C support component with
+`project="paints"`. Its header, store screenshot, product catalog, sample orders
+and delivery contents belong to the paint retailer; the furniture profile is
+unchanged. Hover, focus or tap selects the detailed animated explanation below.
+The work covers Bitrix, Google Sheets, order-closing automation, delivery and
+Yandex Maps. No live API requests or database writes are made.
+
+The versioned shared module (`furniture-1c.js?v=3`) prevents the new mount from
+using a cached furniture-only implementation. The description disclosure stays
+at the top. No demo URL is invented. `check-furniture-preview.cjs` validates both
+project profiles and the corresponding static data.
