@@ -1,0 +1,14 @@
+@import url("./dental-fonts.css");
+
+calls-llm-preview { display: block; min-width: 0; }
+
+section[style*="--project-bg"]:has(calls-llm-preview) {
+  --project-bg: #f1f7f8 !important;
+  --project-border: #cfdfe2 !important;
+  --project-title: #233c47 !important;
+  --project-text: #58727b !important;
+  --project-divider: #9dbdc3 !important;
+  --project-control-fill: #347f87 !important;
+  --project-control-border: #c1d8dc !important;
+  --project-control-muted: #d0e2e4 !important;
+}

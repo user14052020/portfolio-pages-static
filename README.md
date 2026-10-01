@@ -34,3 +34,13 @@ Run the offline integrity checks with Node.js:
 ```powershell
 node scripts/check-dental-preview.cjs
 ```
+
+## Calls / LLM Showcase
+
+The `calls` home-page project uses `project-previews/calls-llm.js`. The animated flow follows the existing project diagram: telephony, LLM speech analysis, API transfer and an Arbis customer profile. Six analysis fields appear progressively before the new call is saved in the sample card. Three fictional conversations, stage selection, history, pause and replay are available locally without network calls or persistent writes.
+
+The source assets and React wrapper follow the same locations as the dental preview, named `calls-*` and `CallsLlmPreview.tsx`. The project description and Python/PHP stack are unchanged. Existing galleries and the dental preview are preserved.
+
+```powershell
+node scripts/check-calls-preview.cjs
+```
