@@ -77,6 +77,7 @@ class TmElectronicsPreview extends HTMLElement {
   attributeChangedCallback(name,before,after) {if(before!==after && this.isConnected && this.abort) this.render();}
   render() {
     renderPreview(this.shadowRoot, [CSS], `<div class="preview">
+      <div class="case-intro"><details><summary>${this.text('Подробнее о проекте','More about the project')}</summary><p>${escape(this.getAttribute('description')||'')}</p></details><a href="${escape(this.siteUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Открыть сайт','Visit website')}${icon('external')}</a></div>
       <nav class="feature-map" role="tablist" aria-label="${this.text('Доработки ТМ Электроникс','TM Electronics improvements')}">${FEATURES.map(([id,ru,en,glyph,subRu,subEn],index)=>`<div class="feature-node"><button role="tab" id="tm-${id}" aria-controls="tm-detail" data-feature="${index}"><span class="node-icon">${icon(glyph)}</span><strong>${this.text(ru,en)}</strong><small>${this.text(subRu,subEn)}</small><span class="node-number">0${index+1}</span></button><i class="node-wire"></i></div>`).join('')}</nav>
       <div class="bridge"><span>${icon('down')}</span></div>
       <section class="detail-window" aria-label="${this.text('ТМ Электроникс: схема доработок','TM Electronics: improvement diagram')}">
@@ -85,7 +86,6 @@ class TmElectronicsPreview extends HTMLElement {
         <footer class="window-footer"><span>${icon('check')}${this.text('Демонстрационные данные','Sample data')}</span><span class="state-label"></span></footer>
       </section>
       <div class="playback"><span class="feature-counter"></span><div class="progress"><i></i></div><button class="tool" data-action="replay" aria-label="${this.text('Повторить анимацию','Replay animation')}" title="${this.text('Повторить','Replay')}">${icon('replay')}</button><button class="tool play" data-action="play"></button></div>
-      <div class="case-footer"><p>${escape(this.getAttribute('description')||'')}</p><a href="${escape(this.siteUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Открыть сайт','Visit website')}${icon('external')}</a></div>
     </div>`, this.english);
     this.renderScene();
     this.updatePlayButton();

@@ -77,10 +77,10 @@ input[type="radio"] { width: 12px; height: 12px; margin: 0; }
 .progress { flex: 1; height: 2px; background: #d7dfe7; margin: 0 8px; overflow: hidden; }
 .progress i { display: block; height: 100%; width: 100%; transform: scaleX(var(--elapsed,0)); transform-origin: left; background: #e63940; }
 .playback .tool { width: 27px; height: 27px; background: transparent; }
-.case-footer { display: flex; gap: 30px; align-items: flex-start; margin-top: 20px; }
-.case-footer p { font-family: "Dental Plex", system-ui, sans-serif; color: #657581; font-size: 13px; line-height: 1.7; margin: 0; white-space: pre-line; }
-.case-footer a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 17px; font-family: "Dental Plex", sans-serif; font-size: 12px; color: #cf2b30; border: 1px solid #d7bfc2; border-radius: 4px; text-decoration: none; flex-shrink: 0; }
-.case-footer a:hover { background: #fff4f4; }
+.case-intro { display: flex; gap: 30px; align-items: flex-start; margin-bottom: 24px; }
+.case-intro p { font-family: "Dental Plex", system-ui, sans-serif; color: #657581; font-size: 13px; line-height: 1.7; margin: 0; white-space: pre-line; }
+.case-intro a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 11px 17px; font-family: "Dental Plex", sans-serif; font-size: 12px; color: #cf2b30; border: 1px solid #d7bfc2; border-radius: 4px; text-decoration: none; flex-shrink: 0; }
+.case-intro a:hover { background: #fff4f4; }
 @keyframes typing { to { opacity: .3; transform: translateY(-3px); } }
 @container eicom (max-width: 750px) {
   .brand-caption { display: none; }
@@ -101,7 +101,7 @@ input[type="radio"] { width: 12px; height: 12px; margin: 0; }
   .message { font-size: 11px; }
   .chat-panel footer { font-size: 8px; }
   .app-footer { padding-inline: 12px; font-size: 8px; }
-  .case-footer { flex-direction: column; gap: 15px; margin-top: 17px; }
-  .case-footer a { width: 100%; }
+  .case-intro { flex-direction: column; gap: 15px; margin-bottom: 20px; }
+  .case-intro a { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

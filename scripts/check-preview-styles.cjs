@@ -106,4 +106,9 @@ for (const file of ['preview-styles.js', 'calls-llm.js', 'dental-crm.js', 'shift
   }
 }
 assert.ok(read('eicom-shop.js').includes('[STYLESHEET, FEATURE_STYLESHEET]'), 'Eicom waits for both style layers');
+for (const file of ['calls-llm.css', 'dental-crm.css', 'shifts-crm.css', 'tm-electronics.css', 'eicom-shop.css', 'eicom-improvements.css']) {
+  assert.equal(read(file), fs.readFileSync(path.join(sourcePath, file), 'utf8'), `${file}: source and static styles match`);
+  assert.ok(read(file).includes('.case-intro'), `${file}: top project actions are styled`);
+  assert.ok(!/\.case-footer|\.case-note/.test(read(file)), `${file}: no obsolete bottom action styling`);
+}
 console.log('Preview stylesheet readiness checks passed.');

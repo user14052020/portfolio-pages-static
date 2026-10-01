@@ -118,6 +118,7 @@ class ShiftsCrmPreview extends HTMLElement {
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
     renderPreview(this.shadowRoot, [STYLESHEET], `<div class="preview">
+      <div class="case-intro"><div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
       ${this.projectStory()}
       <section class="app-window" aria-label="${this.text('График: интерактивный макет CRM', 'Schedule: interactive CRM preview')}">
         <header class="app-header"><strong class="brand">${icon('calendar')}${this.text('график', 'schedule')}</strong><span class="app-caption">${this.text('Учет работы бригад', 'Crew scheduling')}</span><span class="demo-badge">DEMO</span><label class="role-select">${icon('user')}<select data-role aria-label="${this.text('Роль пользователя', 'User role')}"><option value="manager"${this.accessRole === 'manager' ? ' selected' : ''}>${this.text('Менеджер', 'Manager')}</option><option value="employee"${this.accessRole === 'employee' ? ' selected' : ''}>${this.text('Сотрудник · Игорь В', 'Employee · Igor V')}</option></select></label></header>
@@ -126,7 +127,6 @@ class ShiftsCrmPreview extends HTMLElement {
         <footer class="app-footer"><span>${icon('check')}${this.text('Демонстрационные данные', 'Sample data')}</span><span data-page-title></span></footer>
       </section>
       <div class="playback"><span class="page-counter" data-counter></span><div class="markers">${this.allowed.map(index => `<button type="button" data-page="${index}" class="marker" aria-label="${this.text(PAGES[index][1], PAGES[index][2])}" title="${this.text(PAGES[index][1], PAGES[index][2])}"></button>`).join('')}</div><div class="progress"><i></i></div><button type="button" class="icon-button" data-action="previous" aria-label="${this.text('Предыдущая страница графика', 'Previous schedule page')}" title="${this.text('Предыдущая страница', 'Previous page')}">${icon('left')}</button><button type="button" class="icon-button play-toggle" data-action="play"></button><button type="button" class="icon-button" data-action="next" aria-label="${this.text('Следующая страница графика', 'Next schedule page')}" title="${this.text('Следующая страница', 'Next page')}">${icon('right')}</button></div>
-      <div class="case-footer"><div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
     </div>`, this.english);
     this.renderScene(false);
     this.updatePlayButton();

@@ -167,11 +167,12 @@ input::placeholder { color: #a1b0a5; }
 .marker[aria-current="true"]::before { background: #4c8764; }
 .progress { flex: 1; height: 3px; background: #d9e5dd; margin: 0 12px; overflow: hidden; }
 .progress i { display: block; height: 100%; background: #80a48a; transform-origin: left; transform: scaleX(var(--elapsed)); }
-.case-footer { display: flex; align-items: flex-start; gap: 30px; margin-top: 7px; }
+.case-intro { display: flex; align-items: flex-start; gap: 30px; margin-bottom: 24px; }
 .case-copy { flex: 1; min-width: 0; }
 .case-copy p { margin: 0; font-size: 15px; line-height: 1.8; color: var(--project-text, #597361); white-space: pre-line; }
-.case-copy details { margin-top: 9px; }
-.case-copy summary { display: flex; align-items: center; gap: 7px; width: fit-content; cursor: pointer; color: #7a9984; font-size: 11px; list-style: none; }
+.case-copy details { margin: 0; }
+.case-copy summary { display: flex; align-items: center; gap: 7px; min-height: 40px; width: fit-content; cursor: pointer; color: #7a9984; font-size: 12px; list-style: none; }
+.case-copy summary::-webkit-details-marker { display: none; }
 .case-copy summary svg { width: 12px; height: 12px; }
 .case-copy details p { margin-top: 10px; font-size: 13px; }
 .demo-link { display: flex; align-items: center; gap: 9px; padding: 10px 15px; border: 1px solid #acc8b4; border-radius: 5px; background: #f8fcf7; color: #4e795c; font-size: 12px; white-space: nowrap; text-decoration: none; }
@@ -254,7 +255,7 @@ input::placeholder { color: #a1b0a5; }
   .page-counter { margin-right: 2px; font-size: 9px; }
   .progress { display: none; }
   .icon-button { width: 27px; height: 27px; }
-  .case-footer { flex-direction: column; gap: 16px; }
+  .case-intro { flex-direction: column; gap: 12px; margin-bottom: 20px; }
   .case-copy p { font-size: 14px; }
   .demo-link { font-size: 11px; }
 }

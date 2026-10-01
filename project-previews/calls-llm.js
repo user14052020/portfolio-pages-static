@@ -104,6 +104,7 @@ class CallsLlmPreview extends HTMLElement {
   render() {
     renderPreview(this.shadowRoot, [STYLESHEET], `
       <div class="preview">
+        <details class="case-intro"><summary>${this.text('Подробнее о проекте', 'More about the project')}</summary><p class="description">${esc(this.getAttribute('description') || '')}</p></details>
         <div class="pipeline" role="group" aria-label="${this.text('Обработка звонка', 'Call processing')}">
           ${STAGES.map((stage, index) => `<div class="stage-wrap"><button type="button" class="stage stage-${index}" data-stage="${index}" aria-label="${this.text('Этап', 'Stage')} ${index + 1}: ${this.local(stage.name)}" title="${this.local(stage.name)}"><span class="stage-icon">${icon(stage.icon)}</span><span class="stage-text"><strong>${this.local(stage.name)}</strong><small>${this.local(stage.detail)}</small></span><span class="stage-index">0${index + 1}</span><i class="stage-progress"></i></button>${index < 3 ? `<span class="connector" aria-hidden="true">${icon('arrow')}<i></i></span>` : ''}</div>`).join('')}
         </div>
@@ -123,7 +124,6 @@ class CallsLlmPreview extends HTMLElement {
           <footer class="crm-footer"><span class="api-state" data-api></span><span>${this.text('Демонстрационные данные', 'Sample data')}</span></footer>
         </section>
         <div class="playback-controls"><label class="scenario-select"><span>${this.text('Звонок', 'Call')}</span><select data-example aria-label="${this.text('Пример звонка', 'Call example')}">${CALLS.map((call, index) => `<option value="${index}"${index === this.example ? ' selected' : ''}>${this.local(call.subject)}</option>`).join('')}</select></label><span class="step-counter" data-counter></span><div class="progress-track"><i></i></div><button type="button" class="icon-button" data-action="replay" title="${this.text('Повторить', 'Replay')}" aria-label="${this.text('Повторить обработку звонка', 'Replay call processing')}">${icon('replay')}</button><button type="button" class="icon-button play-toggle" data-action="play"></button></div>
-        <p class="description">${esc(this.getAttribute('description') || '')}</p>
       </div>`, this.english);
     this.renderCustomer();
     this.update();

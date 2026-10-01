@@ -50,6 +50,9 @@ attrs.description='Контекст <script>alert(1)</script>\n\nВозможн�
 preview.shadowRoot={innerHTML:''};
 preview.updatePlayButton=()=>{};
 preview.render();
+assert.ok(/class="preview">\s*<div class="case-intro">/.test(preview.shadowRoot.innerHTML));
+assert.equal((preview.shadowRoot.innerHTML.match(/class="case-intro"/g)||[]).length,1);
+assert.ok(preview.shadowRoot.innerHTML.indexOf('href="https://shifts.maharram.ru/"') < preview.shadowRoot.innerHTML.indexOf('class="project-story"'), 'Demo actions precede the diagram');
 assert.ok(preview.shadowRoot.innerHTML.indexOf('class="project-story"') < preview.shadowRoot.innerHTML.indexOf('class="app-window"'));
 assert.ok(preview.shadowRoot.innerHTML.includes('&lt;script&gt;'));
 assert.ok(!preview.shadowRoot.innerHTML.includes('<script>alert'));

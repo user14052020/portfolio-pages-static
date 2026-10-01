@@ -95,6 +95,10 @@ class DentalCrmPreview extends HTMLElement {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
     renderPreview(this.shadowRoot, [STYLESHEET], `
       <div class="preview">
+        <div class="case-intro">
+          <div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('chevron')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div>
+          <a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a>
+        </div>
         ${this.projectStory()}
         <section class="crm-window" aria-label="${this.text('Зуботехническая лаборатория: интерактивный макет', 'Dental laboratory: interactive preview')}">
           <header class="app-header">
@@ -118,10 +122,6 @@ class DentalCrmPreview extends HTMLElement {
             <button class="icon-button" type="button" data-action="next" title="${this.text('Следующая страница', 'Next page')}" aria-label="${this.text('Следующая страница CRM', 'Next CRM page')}">${icon('right')}</button>
           </div>
         </section>
-        <div class="case-note">
-          <div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('chevron')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div>
-          <a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a>
-        </div>
       </div>`, this.english);
     this.renderScene(false);
     this.updatePlayButton();

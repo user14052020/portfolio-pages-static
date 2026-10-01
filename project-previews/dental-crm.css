@@ -156,12 +156,12 @@ td.amount, th.amount { text-align: right; font-variant-numeric: tabular-nums; }
 .scene-marker.passed::after { transform: scaleX(1); opacity: .32; }
 .scene-marker.current::after { transform: scaleX(var(--elapsed, 0)); }
 .viewer-controls .icon-button { border: 0; }
-.case-note { display: flex; align-items: start; justify-content: space-between; gap: 40px; padding-top: 25px; color: var(--project-text, #4b6267); font-family: inherit; }
+.case-intro { display: flex; align-items: start; justify-content: space-between; gap: 40px; margin-bottom: 24px; color: var(--project-text, #4b6267); font-family: inherit; }
 .case-copy { max-width: 860px; min-width: 0; }
 .case-copy p { font-size: 15px; line-height: 1.8; margin: 0; white-space: pre-line; }
-.case-copy details { margin-top: 8px; }
+.case-copy details { margin: 0; }
 .case-copy details p { margin-top: 10px; }
-.case-copy summary { display: inline-flex; align-items: center; gap: 7px; color: #587a79; font-size: 12px; cursor: pointer; list-style: none; }
+.case-copy summary { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: #587a79; font-size: 12px; cursor: pointer; list-style: none; }
 .case-copy summary::-webkit-details-marker { display: none; }
 .case-copy summary svg { width: 13px; height: 13px; transition: transform .2s; }
 .case-copy details[open] summary svg { transform: rotate(180deg); }
@@ -211,7 +211,7 @@ td.amount, th.amount { text-align: right; font-variant-numeric: tabular-nums; }
   .toolbar { flex-wrap: wrap; }
   .toolbar select { width: 100%; max-width: none; padding: 6px; }
   .detail-panel { right: 10px; bottom: 13px; width: min(270px, calc(100% - 20px)); }
-  .case-note { flex-direction: column; gap: 17px; padding-top: 20px; }
+  .case-intro { flex-direction: column; gap: 12px; margin-bottom: 20px; }
   .case-copy p { font-size: 14px; }
   .demo-link { width: 100%; }
   .viewer-controls { padding: 0 11px; gap: 8px; }

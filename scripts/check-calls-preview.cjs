@@ -50,6 +50,20 @@ assert.equal(context.escapeText('<script>"&'), '&lt;script&gt;&quot;&amp;');
 assert.equal(preview.local(preview.call.name), 'Денис Орлов');
 attrs.locale = 'en';
 assert.equal(preview.local(preview.call.name), 'Denis Orlov');
+preview.shadowRoot = { innerHTML: '' };
+preview.updatePlayButton = () => {};
+attrs.description = '<script>Sample & description';
+for (const locale of ['ru', 'en']) {
+  attrs.locale = locale;
+  preview.render();
+  const markup = preview.shadowRoot.innerHTML;
+  assert.ok(/class="preview">\s*<details class="case-intro"><summary>/.test(markup), 'Calls description is a top-level disclosure');
+  assert.equal((markup.match(/class="description"/g) || []).length, 1, 'Description is not repeated below the animation');
+  assert.ok(markup.indexOf('class="description"') < markup.indexOf('class="pipeline"'));
+  assert.ok(!markup.includes('<details class="case-intro" open'), 'Description is collapsed by default');
+  assert.ok(markup.includes('&lt;script&gt;Sample &amp; description'));
+  assert.ok(markup.includes(locale === 'ru' ? 'Подробнее о проекте' : 'More about the project'));
+}
 assert.ok(!/\bfetch\s*\(|XMLHttpRequest|<iframe|localStorage/.test(source));
 assert.ok(source.includes('disconnectedCallback()'));
 assert.ok(source.includes('IntersectionObserver'));

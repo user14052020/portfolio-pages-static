@@ -45,6 +45,10 @@ This prevents unstyled, oversized SVG icons on cold loads and project changes.
 Animation clocks start only after the styled content is visible.
 Keep the shared helper synchronized with the canonical source assets.
 
+Each animated preview starts with its collapsed project description and existing
+demo or website link, above the diagrams and animated scenes. The Calls / LLM
+preview has the same top description disclosure, without an invented demo link.
+
 ```powershell
 node scripts/check-preview-styles.cjs
 ```
