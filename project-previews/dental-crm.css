@@ -17,6 +17,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 svg { display: block; width: 18px; height: 18px; flex: 0 0 auto; }
 .preview { container-type: inline-size; container-name: dental; }
+.project-story { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin: 0 0 28px; padding: 0; list-style: none; font-family: "Dental Plex", system-ui, sans-serif; }
+.story-step { position: relative; display: flex; align-items: flex-start; gap: 13px; min-width: 0; min-height: 130px; padding: 18px 15px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+.story-icon { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; margin-top: 18px; border-radius: 5px; background: #e8f4f2; color: var(--teal); }
+.story-step:nth-child(2) .story-icon { background: #edf2f9; color: #6382aa; }
+.story-step:nth-child(3) .story-icon { background: #fbf2e1; color: #ac873e; }
+.story-step:last-child { border-color: #abd2c8; background: #f8fcfa; }
+.story-step:last-child .story-icon { background: #e6f3ec; color: #56866b; }
+.story-step > div { min-width: 0; }
+.story-label { display: block; margin-bottom: 7px; color: #899d9e; font-size: 9px; line-height: 1.3; }
+.story-step strong { display: block; color: #375d5f; font-size: 14px; line-height: 1.4; font-weight: 600; }
+.story-step p { margin: 8px 0 0; color: #778e91; font-size: 11px; line-height: 1.6; }
+.story-step:last-child p { color: #638879; }
+.story-connector { position: absolute; display: grid; place-items: center; width: 32px; right: -33px; top: 50%; transform: translateY(-50%); color: #99bdb8; }
+.story-connector::before { content: ''; position: absolute; left: 3px; right: 3px; border-top: 1px solid #c0d9d5; }
+.story-connector svg { position: relative; width: 15px; height: 15px; margin-left: 11px; background: var(--project-surface, #f2f7f7); }
+.story-connector i { position: absolute; left: 3px; width: 4px; height: 4px; border-radius: 50%; background: #63aaa0; animation: story-transfer 3.6s linear infinite; }
+.story-step:nth-child(2) .story-connector i { animation-delay: 1.2s; }
+.story-step:nth-child(3) .story-connector i { animation-delay: 2.4s; }
+:host(:not([data-playing="true"])) .story-connector i { animation-play-state: paused; }
+@keyframes story-transfer { 0%,35% { transform: translateX(0); opacity: 0; } 40% { opacity: 1; } 65% { transform: translateX(16px); opacity: 1; } 70%,100% { transform: translateX(16px); opacity: 0; } }
 .crm-window {
   overflow: hidden;
   border: 1px solid #cddedd;
@@ -152,6 +172,12 @@ td.amount, th.amount { text-align: right; font-variant-numeric: tabular-nums; }
 @keyframes grow { from { transform: scaleY(.03); } to { transform: scaleY(1); } }
 @keyframes step-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @container dental (max-width: 1050px) {
+  .project-story { gap: 24px; }
+  .story-step { gap: 10px; padding: 16px 11px; }
+  .story-icon { width: 28px; height: 28px; }
+  .story-step strong { font-size: 13px; }
+  .story-connector { width: 24px; right: -25px; }
+  .story-connector svg { margin-left: 6px; }
   .app-body { grid-template-columns: 168px minmax(0, 1fr); }
   .scene { padding: 20px; }
   .stats { gap: 8px; }
@@ -189,6 +215,14 @@ td.amount, th.amount { text-align: right; font-variant-numeric: tabular-nums; }
   .case-copy p { font-size: 14px; }
   .demo-link { width: 100%; }
   .viewer-controls { padding: 0 11px; gap: 8px; }
+}
+@container dental (max-width: 600px) {
+  .project-story { grid-template-columns: minmax(0, 1fr); gap: 23px; margin-bottom: 23px; }
+  .story-step { min-height: 88px; padding: 14px 16px; gap: 13px; }
+  .story-icon { margin-top: 12px; }
+  .story-step strong { font-size: 14px; }
+  .story-step p { margin-top: 5px; }
+  .story-connector { right: auto; left: 50%; top: auto; bottom: -12px; transform: translate(-50%,50%) rotate(90deg); }
 }
 @container dental (max-width: 380px) {
   .brand strong { max-width: 190px; }

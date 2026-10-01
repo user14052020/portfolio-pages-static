@@ -94,6 +94,7 @@ class DentalCrmPreview extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <link rel="stylesheet" href="${STYLESHEET}">
       <div class="preview">
+        ${this.projectStory()}
         <section class="crm-window" aria-label="${this.text('Зуботехническая лаборатория: интерактивный макет', 'Dental laboratory: interactive preview')}">
           <header class="app-header">
             <div class="brand"><span class="brand-symbol">${icon('dental')}</span><div><strong>${this.text('Зуботехническая лаборатория', 'Dental laboratory')}</strong><small>${this.text('Операционный кабинет лаборатории', 'Laboratory operations workspace')}</small></div></div>
@@ -117,12 +118,22 @@ class DentalCrmPreview extends HTMLElement {
           </div>
         </section>
         <div class="case-note">
-          <div class="case-copy"><p>${esc(description[0] || '')}</p>${description.length > 1 ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('chevron')}</summary><p>${esc(description.slice(1).join('\n\n'))}</p></details>` : ''}</div>
+          <div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('chevron')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div>
           <a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a>
         </div>
       </div>`;
     this.renderScene(false);
     this.updatePlayButton();
+  }
+
+  projectStory() {
+    const stages = [
+      ['files', 'Заказ', 'Order', 'Наряд клиники', 'Clinic order', 'Конструкция, заказчик и срок', 'Restoration, client and deadline'],
+      ['briefcase', 'Производство', 'Production', 'Этапы работы', 'Production stages', 'Исполнители, сроки и материалы', 'Technicians, deadlines and materials'],
+      ['users', 'Обновление', 'Updates', 'Чат-бот сотрудника', 'Staff chatbot', 'Изменение статуса прямо из чата', 'Job status updates directly from chat'],
+      ['receipt', 'Контроль', 'Control', 'Оплаты и сводка', 'Payments and overview', 'Расчеты с клиниками и показатели лаборатории', 'Clinic balances and laboratory metrics'],
+    ];
+    return `<ol class="project-story" aria-label="${this.text('Цикл работы зуботехнической лаборатории', 'Dental laboratory workflow')}">${stages.map(([glyph,ru,en,titleRu,titleEn,copyRu,copyEn],index) => `<li class="story-step" data-story-step="${index}"><span class="story-icon">${icon(glyph)}</span><div><span class="story-label">${this.text(ru,en)}</span><strong>${this.text(titleRu,titleEn)}</strong><p>${this.text(copyRu,copyEn)}</p></div>${index < stages.length - 1 ? `<span class="story-connector" aria-hidden="true"><i></i>${icon('right')}</span>` : ''}</li>`).join('')}</ol>`;
   }
 
   title() {

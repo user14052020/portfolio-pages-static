@@ -42,12 +42,36 @@ assert.equal((preview.orderRows().match(/class="demo-row"/g) || []).length, 4);
 assert.ok(preview.orderRows().includes('class="empty-row" hidden'));
 assert.ok(preview.detail(1).includes('DL-1047'));
 assert.ok(preview.detail(1).includes('aria-hidden="true" inert'));
+const story = preview.projectStory();
+assert.equal((story.match(/data-story-step=/g) || []).length, 4);
+assert.equal((story.match(/class="story-connector"/g) || []).length, 3);
+assert.ok(story.includes('<ol class="project-story"'));
+for (const text of ['Наряд клиники', 'Этапы работы', 'Чат-бот сотрудника', 'Оплаты и сводка']) {
+  assert.ok(story.includes(text));
+}
+assert.ok(!story.includes('<button'));
+preview.shadowRoot = { innerHTML: '' };
+preview.renderScene = () => {};
+preview.updatePlayButton = () => {};
+attrs.description = 'Project <script>\n\nAdditional details';
+preview.render();
+const rendered = preview.shadowRoot.innerHTML;
+assert.ok(rendered.indexOf('class="project-story"') < rendered.indexOf('class="crm-window"'));
+assert.ok(rendered.includes('href="https://dental.maharram.ru/"'));
+assert.ok(rendered.includes('<details><summary>'));
+assert.ok(rendered.includes('Project &lt;script&gt;\n\nAdditional details'));
+assert.ok(!rendered.includes('class="case-copy"><p>'));
 attrs.locale = 'en';
 assert.ok(preview.dashboard().includes('Overview'));
 assert.ok(preview.orders().includes('Mint Dental'));
+assert.ok(preview.projectStory().includes('Staff chatbot'));
+assert.ok(!preview.projectStory().includes('Чат-бот'));
 
 assert.ok(styles.includes('prefers-reduced-motion'));
 assert.ok(styles.includes('grid-template-columns: repeat(2, minmax(0, 1fr))'));
+assert.ok(styles.includes('@container dental (max-width: 600px)'));
+assert.ok(styles.includes('grid-template-columns: minmax(0, 1fr)'));
+assert.ok(styles.includes(':host(:not([data-playing="true"])) .story-connector i'));
 assert.ok(!/\bfetch\s*\(|<iframe|XMLHttpRequest/.test(moduleSource));
 assert.ok(moduleSource.includes('disconnectedCallback()'));
 
