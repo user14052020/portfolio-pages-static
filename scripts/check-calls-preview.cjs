@@ -15,6 +15,7 @@ const context = vm.createContext({
 });
 vm.runInContext(source.replace("import { ICONS } from './calls-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
   .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
+  .replace("import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';", require('./project-diagram-fixture.cjs'))
   .replace("new URL('./calls-llm.css', import.meta.url).href", "'calls-llm.css'")
   + '\nthis.Preview = CallsLlmPreview; this.escapeText = esc; this.formatTime = time;', context);
 const preview = new context.Preview();
@@ -70,7 +71,7 @@ assert.ok(source.includes('IntersectionObserver'));
 assert.ok(read('project-previews/calls-llm.css').includes('prefers-reduced-motion'));
 for (const file of ['index.html', '404.html']) {
   const html = read(file);
-  assert.ok(html.includes('src="/project-previews/calls-llm.js"'));
+  assert.ok(html.includes('src="/project-previews/calls-llm.js?v=4"'));
   assert.ok(html.includes('href="/project-previews/calls-host.css"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))];
   assert.equal(chunks.length, 1);

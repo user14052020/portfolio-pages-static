@@ -172,7 +172,7 @@ for (const file of ['preview-styles.js', 'calls-llm.js', 'dental-crm.js', 'shift
     assert.ok(!source.includes('this.shadowRoot.innerHTML'), 'Full renders cannot replace or reload stylesheet nodes');
   }
 }
-assert.ok(read('eicom-shop.js').includes('[STYLESHEET, FEATURE_STYLESHEET]'), 'Eicom waits for both style layers');
+assert.ok(read('eicom-shop.js').includes('[STYLESHEET, FEATURE_STYLESHEET, DIAGRAM_STYLESHEET]'), 'Eicom waits for all three style layers');
 for (const file of ['calls-llm.css', 'dental-crm.css', 'shifts-crm.css', 'tm-electronics.css', 'eicom-shop.css', 'eicom-improvements.css', 'furniture-1c.css']) {
   assert.equal(read(file), fs.readFileSync(path.join(sourcePath, file), 'utf8'), `${file}: source and static styles match`);
   assert.ok(read(file).includes('.case-intro'), `${file}: top project actions are styled`);

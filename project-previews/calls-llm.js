@@ -1,5 +1,6 @@
 import { ICONS } from './calls-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
+import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';
 
 const STYLESHEET = new URL('./calls-llm.css', import.meta.url).href;
 const DURATIONS = [4000, 6000, 2600, 6800];
@@ -103,9 +104,10 @@ class CallsLlmPreview extends HTMLElement {
   }
 
   render() {
-    renderPreview(this.shadowRoot, [STYLESHEET], `
+    renderPreview(this.shadowRoot, [STYLESHEET, DIAGRAM_STYLESHEET], `
       <div class="preview">
         <details class="case-intro"><summary>${this.text('Подробнее о проекте', 'More about the project')}</summary><p class="description">${esc(this.getAttribute('description') || '')}</p></details>
+        ${projectHeading('calls', this.english)}
         <div class="pipeline" role="group" aria-label="${this.text('Обработка звонка', 'Call processing')}">
           ${STAGES.map((stage, index) => `<div class="stage-wrap"><button type="button" class="stage stage-${index}" data-stage="${index}" aria-label="${this.text('Этап', 'Stage')} ${index + 1}: ${this.local(stage.name)}" title="${this.local(stage.name)}"><span class="stage-icon">${icon(stage.icon)}</span><span class="stage-text"><strong>${this.local(stage.name)}</strong><small>${this.local(stage.detail)}</small></span><span class="stage-index">0${index + 1}</span><i class="stage-progress"></i></button>${index < 3 ? `<span class="connector" aria-hidden="true">${icon('arrow')}<i></i></span>` : ''}</div>`).join('')}
         </div>

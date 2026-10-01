@@ -116,7 +116,21 @@ unchanged. Hover, focus or tap selects the detailed animated explanation below.
 The work covers Bitrix, Google Sheets, order-closing automation, delivery and
 Yandex Maps. No live API requests or database writes are made.
 
-The versioned shared module (`furniture-1c.js?v=3`) prevents the new mount from
+The versioned shared module (`furniture-1c.js?v=4`) prevents the new mount from
 using a cached furniture-only implementation. The description disclosure stays
 at the top. No demo URL is invented. `check-furniture-preview.cjs` validates both
 project profiles and the corresponding static data.
+
+## Shared Diagram Heading
+
+All seven web-project previews display "What was delivered" ("Что было сделано")
+above their task blocks. `project-diagram.js` and `project-diagram.css` render
+the shared distribution line and downward arrows, matching each preview's
+palette, column count and responsive breakpoints. Project actions and description
+disclosures remain above it; the existing lower connectors are unchanged.
+The shared stylesheet participates in the preview's loading gate.
+
+Preview module URLs use `?v=4` to avoid cached versions without the heading.
+Keep both shared assets and all preview modules synchronized with the canonical
+frontend public directory. Run `node scripts/check-diagram-preview.cjs` alongside
+the existing checks. No local application build is required.

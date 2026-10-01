@@ -1,0 +1,59 @@
+.project-diagram-heading { --diagram-columns: 4; --diagram-gap: 32px; --diagram-line: #c0d9d5; --diagram-ink: #759891; color: #617e78; margin: 0; }
+.project-diagram-heading h3 { position: relative; margin: 0; padding-bottom: 18px; font-family: inherit; font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; letter-spacing: 0; }
+.project-diagram-heading h3::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 14px; border-left: 1px solid var(--diagram-line); }
+.diagram-branches { display: grid; grid-template-columns: repeat(var(--diagram-columns), minmax(0, 1fr)); gap: var(--diagram-gap); height: 25px; }
+.diagram-branches > span { position: relative; display: grid; justify-items: center; min-width: 0; color: var(--diagram-ink); }
+.diagram-branches > span::before { content: ''; position: absolute; top: 0; left: 0; right: calc(0px - var(--diagram-gap)); border-top: 1px solid var(--diagram-line); }
+.diagram-branches > span:first-child::before { left: 50%; }
+.diagram-branches > span:last-child::before { right: 50%; }
+.diagram-branches > span::after { content: ''; position: absolute; top: 0; left: 50%; height: 17px; border-left: 1px solid var(--diagram-line); }
+.diagram-branches svg { display: block; width: 16px; height: 16px; margin-top: 11px; flex-shrink: 0; }
+[data-diagram="calls"] { --diagram-line: #c1d4d8; --diagram-ink: #839fa5; color: #718b92; }
+[data-diagram="shifts"] { --diagram-line: #c3d8cb; --diagram-ink: #819e8d; color: #6a8877; }
+[data-diagram="tm"] { --diagram-columns: 7; --diagram-gap: 14px; --diagram-line: #bdd0dc; --diagram-ink: #7ba2bc; color: #648395; }
+[data-diagram="eicom"] { --diagram-columns: 9; --diagram-gap: 10px; --diagram-line: #d5dfe8; --diagram-ink: #90a4b5; color: #6b8395; }
+[data-diagram="furniture"] { --diagram-columns: 5; --diagram-gap: 20px; --diagram-line: #b9ccc5; --diagram-ink: #809e91; }
+@container dental (max-width: 1050px) { [data-diagram="dental"] { --diagram-gap: 24px; } }
+@container shifts (max-width: 900px) { [data-diagram="shifts"] { --diagram-gap: 24px; } }
+@container tm (max-width: 1050px) { [data-diagram="tm"] { --diagram-gap: 9px; } }
+@container furniture (max-width: 850px) { [data-diagram="furniture"] { --diagram-gap: 10px; } }
+@container calls (max-width: 740px) {
+  [data-diagram="calls"] { --diagram-columns: 2; --diagram-gap: 26px; }
+  [data-diagram="calls"] .diagram-branches > span:nth-child(n+3) { display: none; }
+  [data-diagram="calls"] .diagram-branches > span:nth-child(2)::before { right: 50%; }
+}
+@container tm (max-width: 750px) {
+  [data-diagram="tm"] { --diagram-columns: 4; --diagram-gap: 10px; }
+  [data-diagram="tm"] .diagram-branches > span:nth-child(n+5) { display: none; }
+  [data-diagram="tm"] .diagram-branches > span:nth-child(4)::before { right: 50%; }
+}
+@container eicom (max-width: 750px) {
+  [data-diagram="eicom"] { --diagram-columns: 4; --diagram-gap: 9px; }
+  [data-diagram="eicom"] .diagram-branches > span:nth-child(n+5) { display: none; }
+  [data-diagram="eicom"] .diagram-branches > span:nth-child(4)::before { right: 50%; }
+}
+@container furniture (max-width: 550px) {
+  [data-diagram="furniture"] { --diagram-columns: 2; }
+  [data-diagram="furniture"] .diagram-branches > span:nth-child(n+3) { display: none; }
+  [data-diagram="furniture"] .diagram-branches > span:nth-child(2)::before { right: 50%; }
+}
+@container tm (max-width: 480px) {
+  [data-diagram="tm"] { --diagram-columns: 2; --diagram-gap: 8px; }
+  [data-diagram="tm"] .diagram-branches > span:nth-child(n+3) { display: none; }
+  [data-diagram="tm"] .diagram-branches > span:nth-child(2)::before { right: 50%; }
+}
+@container eicom (max-width: 480px) {
+  [data-diagram="eicom"] { --diagram-columns: 2; --diagram-gap: 7px; }
+  [data-diagram="eicom"] .diagram-branches > span:nth-child(n+3) { display: none; }
+  [data-diagram="eicom"] .diagram-branches > span:nth-child(2)::before { right: 50%; }
+}
+@container dental (max-width: 600px) {
+  [data-diagram="dental"] { --diagram-columns: 1; }
+  [data-diagram="dental"] .diagram-branches > span:nth-child(n+2) { display: none; }
+  [data-diagram="dental"] .diagram-branches > span:first-child::before { right: 50%; }
+}
+@container shifts (max-width: 600px) {
+  [data-diagram="shifts"] { --diagram-columns: 1; }
+  [data-diagram="shifts"] .diagram-branches > span:nth-child(n+2) { display: none; }
+  [data-diagram="shifts"] .diagram-branches > span:first-child::before { right: 50%; }
+}

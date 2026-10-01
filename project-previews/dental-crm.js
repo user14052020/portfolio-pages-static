@@ -1,5 +1,6 @@
 import { ICONS } from './dental-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
+import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';
 
 const STEP_MS = 6500;
 const STYLESHEET = new URL('./dental-crm.css', import.meta.url).href;
@@ -94,12 +95,13 @@ class DentalCrmPreview extends HTMLElement {
 
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
-    renderPreview(this.shadowRoot, [STYLESHEET], `
+    renderPreview(this.shadowRoot, [STYLESHEET, DIAGRAM_STYLESHEET], `
       <div class="preview">
         <div class="case-intro">
           <div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('chevron')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div>
           <a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a>
         </div>
+        ${projectHeading('dental', this.english)}
         ${this.projectStory()}
         <section class="crm-window" aria-label="${this.text('Зуботехническая лаборатория: интерактивный макет', 'Dental laboratory: interactive preview')}">
           <header class="app-header">

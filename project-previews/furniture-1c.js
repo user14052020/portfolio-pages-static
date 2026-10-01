@@ -1,5 +1,6 @@
 import { ICONS } from './tm-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
+import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';
 
 const CSS = new URL('./furniture-1c.css', import.meta.url).href;
 const PROJECTS = {
@@ -85,8 +86,9 @@ class Furniture1cPreview extends HTMLElement {
   }
   attributeChangedCallback(name, before, after) { if (before !== after && this.isConnected && this.abort) this.render(); }
   render() {
-    renderPreview(this.shadowRoot, [CSS], `<div class="preview">
+    renderPreview(this.shadowRoot, [CSS, DIAGRAM_STYLESHEET], `<div class="preview">
       <div class="case-intro"><details><summary>${this.text('Подробнее о проекте', 'More about the project')}</summary><p>${esc(this.getAttribute('description') || '')}</p></details><span class="engagement">${this.text('Сопровождение существующей 1С', 'Support for an existing 1C system')}</span></div>
+      ${projectHeading('furniture', this.english)}
       <nav class="feature-map" role="tablist" aria-label="${this.text('Задачи сопровождения 1С', '1C support tasks')}">${FEATURES.map(([id, ru, en, glyph, subRu, subEn], index) => `<div class="feature-node"><button type="button" role="tab" id="furniture-${id}" aria-controls="furniture-detail" data-feature="${index}"><span class="node-icon">${icon(glyph)}</span><strong>${this.text(ru, en)}</strong><small>${this.text(subRu, subEn)}</small><span class="node-number">0${index + 1}</span></button><i class="node-wire"></i></div>`).join('')}</nav>
       <div class="bridge" aria-hidden="true">${icon('down')}</div>
       <section class="detail-window" aria-label="${this.text(this.project.label[0] + ': сопровождение и интеграции 1С', this.project.label[1] + ': 1C support and integrations')}">

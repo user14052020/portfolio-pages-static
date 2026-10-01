@@ -1,5 +1,6 @@
 import { ICONS } from './shifts-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
+import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';
 
 const STYLESHEET = new URL('./shifts-crm.css', import.meta.url).href;
 const STEP_MS = 6500;
@@ -118,8 +119,9 @@ class ShiftsCrmPreview extends HTMLElement {
 
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
-    renderPreview(this.shadowRoot, [STYLESHEET], `<div class="preview">
+    renderPreview(this.shadowRoot, [STYLESHEET, DIAGRAM_STYLESHEET], `<div class="preview">
       <div class="case-intro"><div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
+      ${projectHeading('shifts', this.english)}
       ${this.projectStory()}
       <section class="app-window" aria-label="${this.text('График: интерактивный макет CRM', 'Schedule: interactive CRM preview')}">
         <header class="app-header"><strong class="brand">${icon('calendar')}${this.text('график', 'schedule')}</strong><span class="app-caption">${this.text('Учет работы бригад', 'Crew scheduling')}</span><span class="demo-badge">DEMO</span><label class="role-select">${icon('user')}<select data-role aria-label="${this.text('Роль пользователя', 'User role')}"><option value="manager"${this.accessRole === 'manager' ? ' selected' : ''}>${this.text('Менеджер', 'Manager')}</option><option value="employee"${this.accessRole === 'employee' ? ' selected' : ''}>${this.text('Сотрудник · Игорь В', 'Employee · Igor V')}</option></select></label></header>

@@ -21,6 +21,7 @@ const context = vm.createContext({
 vm.runInContext(
   moduleSource.replace("import { ICONS } from './dental-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
     .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
+    .replace("import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';", require('./project-diagram-fixture.cjs'))
     .replace("new URL('./dental-crm.css', import.meta.url).href", "'dental-crm.css'")
     + '\nthis.Preview = DentalCrmPreview; this.escapeText = esc;',
   context,
@@ -82,7 +83,7 @@ assert.ok(moduleSource.includes('disconnectedCallback()'));
 for (const file of ['index.html', '404.html']) {
   const html = read(file);
   assert.equal((html.match(/<dental-crm-preview\b/g) || []).length, 1);
-  assert.ok(html.includes('src="/project-previews/dental-crm.js"'));
+  assert.ok(html.includes('src="/project-previews/dental-crm.js?v=4"'));
   assert.ok(html.includes('href="/project-previews/dental-host.css"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))];
   assert.equal(chunks.length, 1);
