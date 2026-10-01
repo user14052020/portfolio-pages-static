@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Dental Plex";
+  src: url("./fonts/ibm-plex-sans-cyrillic-400-normal.03c3c250.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face {
+  font-family: "Dental Plex";
+  src: url("./fonts/ibm-plex-sans-latin-400-normal.13a15bcd.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Dental Manrope";
+  src: url("./fonts/manrope-cyrillic-700-normal.a3ab8973.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face {
+  font-family: "Dental Manrope";
+  src: url("./fonts/manrope-latin-700-normal.4fc2723e.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
