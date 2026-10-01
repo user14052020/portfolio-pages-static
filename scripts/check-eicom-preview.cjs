@@ -15,6 +15,7 @@ const bundledImprovements=improvements
   .replaceAll('export const','const').replaceAll('export function','function');
 const context=vm.createContext({HTMLElement:class { attachShadow(){} set role(value){throw Error('Reflected attributes are not allowed in constructors');} },customElements:{get:()=>true},URL,Intl,requestAnimationFrame:()=>1,cancelAnimationFrame:()=>{},document:{hidden:false},performance:{now:()=>0}});
 vm.runInContext(source.replace("import { ICONS } from './eicom-icons.js';",icons.replace('export const ICONS','const ICONS'))
+  .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
   .replace("import { FEATURES, FEATURE_MS, featureMap, featureScene, updateFeature } from './eicom-improvements.js';",bundledImprovements)
   .replaceAll('import.meta.url',"'https://example.com/project-previews/eicom-shop.js'")+'\nthis.Preview=EicomShopPreview;this.esc=esc;this.FEATURES=FEATURES;this.featureScene=featureScene;this.featureMap=featureMap;this.updateFeature=updateFeature;',context);
 const preview=new context.Preview();
@@ -120,6 +121,11 @@ for(const file of ['eicom-shop.js','eicom-shop.css','eicom-improvements.js','eic
   if(fs.existsSync(canonical)) assert.equal(read('project-previews/'+file),fs.readFileSync(canonical,'utf8'),'Source and Pages mirror match: '+file);
 }
 preview.dataset={}; preview.isConnected=true; preview.visible=true; preview.requestedPlay=true;
+const readyQuery=preview.shadowRoot.querySelector;
+preview.shadowRoot.querySelector=selector=>selector==='[data-preview-content][hidden]'?{}:readyQuery(selector);
+context.Preview.prototype.syncClock.call(preview);
+assert.equal(preview.dataset.playing,'false','Playback does not advance behind pending styles');
+preview.shadowRoot.querySelector=readyQuery;
 context.Preview.prototype.syncClock.call(preview);
 assert.equal(preview.dataset.playing,'true');
 preview.visible=false;

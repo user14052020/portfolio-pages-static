@@ -8,7 +8,9 @@ const read = file => fs.readFileSync(path.join(root,file),'utf8');
 const source = read('project-previews/shifts-crm.js');
 const icons = read('project-previews/shifts-icons.js');
 const context = vm.createContext({ HTMLElement:class { attachShadow() {} set role(value) { throw new Error('Custom element constructors must not set reflected attributes'); } }, customElements:{get:()=>true}, requestAnimationFrame:()=>42, URL });
-vm.runInContext(source.replace("import { ICONS } from './shifts-icons.js';",icons.replace('export const ICONS','const ICONS')).replace("new URL('./shifts-crm.css', import.meta.url).href","'shifts-crm.css'")+'\nthis.Preview=ShiftsCrmPreview; this.matching=matching; this.csvCell=csvCell; this.esc=esc;',context);
+vm.runInContext(source.replace("import { ICONS } from './shifts-icons.js';",icons.replace('export const ICONS','const ICONS'))
+  .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
+  .replace("new URL('./shifts-crm.css', import.meta.url).href","'shifts-crm.css'")+'\nthis.Preview=ShiftsCrmPreview; this.matching=matching; this.csvCell=csvCell; this.esc=esc;',context);
 const preview = new context.Preview();
 const attrs={locale:'ru'};
 preview.getAttribute=key=>attrs[key] || null;

@@ -37,6 +37,18 @@ node scripts/check-dental-preview.cjs
 
 ## Calls / LLM Showcase
 
+All five animated project previews share `project-previews/preview-styles.js`.
+Shadow-root stylesheets are retained across renders. An inline paint gate keeps
+content hidden and unfocusable until every required stylesheet has loaded, with
+a bounded loading placeholder and an explicit retry state on network errors.
+This prevents unstyled, oversized SVG icons on cold loads and project changes.
+Animation clocks start only after the styled content is visible.
+Keep the shared helper synchronized with the canonical source assets.
+
+```powershell
+node scripts/check-preview-styles.cjs
+```
+
 The `calls` home-page project uses `project-previews/calls-llm.js`. The animated flow follows the existing project diagram: telephony, LLM speech analysis, API transfer and an Arbis customer profile. Six analysis fields appear progressively before the new call is saved in the sample card. Three fictional conversations, stage selection, history, pause and replay are available locally without network calls or persistent writes.
 
 The source assets and React wrapper follow the same locations as the dental preview, named `calls-*` and `CallsLlmPreview.tsx`. The project description and Python/PHP stack are unchanged. Existing galleries and the dental preview are preserved.

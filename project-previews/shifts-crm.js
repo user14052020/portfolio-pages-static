@@ -1,4 +1,5 @@
 import { ICONS } from './shifts-icons.js';
+import { renderPreview } from './preview-styles.js';
 
 const STYLESHEET = new URL('./shifts-crm.css', import.meta.url).href;
 const STEP_MS = 6500;
@@ -87,6 +88,7 @@ class ShiftsCrmPreview extends HTMLElement {
     }, options);
     this.motion.addEventListener('change', () => { if (this.motion.matches) this.setPlaying(false); }, options);
     document.addEventListener('visibilitychange', () => this.syncClock(), options);
+    this.shadowRoot.addEventListener('previewstylesready', () => this.syncClock(), options);
     this.render();
     this.observer = new IntersectionObserver(entries => {
       this.visible = entries[0].isIntersecting;
@@ -115,7 +117,7 @@ class ShiftsCrmPreview extends HTMLElement {
 
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
-    this.shadowRoot.innerHTML = `<link rel="stylesheet" href="${STYLESHEET}"><div class="preview">
+    renderPreview(this.shadowRoot, [STYLESHEET], `<div class="preview">
       ${this.projectStory()}
       <section class="app-window" aria-label="${this.text('График: интерактивный макет CRM', 'Schedule: interactive CRM preview')}">
         <header class="app-header"><strong class="brand">${icon('calendar')}${this.text('график', 'schedule')}</strong><span class="app-caption">${this.text('Учет работы бригад', 'Crew scheduling')}</span><span class="demo-badge">DEMO</span><label class="role-select">${icon('user')}<select data-role aria-label="${this.text('Роль пользователя', 'User role')}"><option value="manager"${this.accessRole === 'manager' ? ' selected' : ''}>${this.text('Менеджер', 'Manager')}</option><option value="employee"${this.accessRole === 'employee' ? ' selected' : ''}>${this.text('Сотрудник · Игорь В', 'Employee · Igor V')}</option></select></label></header>
@@ -125,7 +127,7 @@ class ShiftsCrmPreview extends HTMLElement {
       </section>
       <div class="playback"><span class="page-counter" data-counter></span><div class="markers">${this.allowed.map(index => `<button type="button" data-page="${index}" class="marker" aria-label="${this.text(PAGES[index][1], PAGES[index][2])}" title="${this.text(PAGES[index][1], PAGES[index][2])}"></button>`).join('')}</div><div class="progress"><i></i></div><button type="button" class="icon-button" data-action="previous" aria-label="${this.text('Предыдущая страница графика', 'Previous schedule page')}" title="${this.text('Предыдущая страница', 'Previous page')}">${icon('left')}</button><button type="button" class="icon-button play-toggle" data-action="play"></button><button type="button" class="icon-button" data-action="next" aria-label="${this.text('Следующая страница графика', 'Next schedule page')}" title="${this.text('Следующая страница', 'Next page')}">${icon('right')}</button></div>
       <div class="case-footer"><div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
-    </div>`;
+    </div>`, this.english);
     this.renderScene(false);
     this.updatePlayButton();
   }
@@ -274,7 +276,7 @@ class ShiftsCrmPreview extends HTMLElement {
   }
 
   syncClock() {
-    const running=this.isConnected && this.requestedPlay && this.visible && !document.hidden;
+    const running=this.isConnected && this.requestedPlay && this.visible && !document.hidden && !this.shadowRoot.querySelector('[data-preview-content][hidden]');
     this.dataset.playing=String(running);
     if (running===this.running) return;
     this.running=running;

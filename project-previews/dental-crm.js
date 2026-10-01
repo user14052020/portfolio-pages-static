@@ -1,4 +1,5 @@
 import { ICONS } from './dental-icons.js';
+import { renderPreview } from './preview-styles.js';
 
 const STEP_MS = 6500;
 const STYLESHEET = new URL('./dental-crm.css', import.meta.url).href;
@@ -58,6 +59,7 @@ class DentalCrmPreview extends HTMLElement {
       if (event.target.matches('input, select')) this.setPlaying(false);
     }, options);
     document.addEventListener('visibilitychange', () => this.syncClock(), options);
+    this.shadowRoot.addEventListener('previewstylesready', () => this.syncClock(), options);
     this.motion.addEventListener('change', () => {
       if (this.motion.matches) this.setPlaying(false);
     }, options);
@@ -91,8 +93,7 @@ class DentalCrmPreview extends HTMLElement {
 
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="${STYLESHEET}">
+    renderPreview(this.shadowRoot, [STYLESHEET], `
       <div class="preview">
         ${this.projectStory()}
         <section class="crm-window" aria-label="${this.text('Зуботехническая лаборатория: интерактивный макет', 'Dental laboratory: interactive preview')}">
@@ -121,7 +122,7 @@ class DentalCrmPreview extends HTMLElement {
           <div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('chevron')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div>
           <a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a>
         </div>
-      </div>`;
+      </div>`, this.english);
     this.renderScene(false);
     this.updatePlayButton();
   }
@@ -314,7 +315,7 @@ class DentalCrmPreview extends HTMLElement {
   }
 
   syncClock() {
-    const running = this.isConnected && this.requestedPlay && this.visible && !document.hidden;
+    const running = this.isConnected && this.requestedPlay && this.visible && !document.hidden && !this.shadowRoot.querySelector('[data-preview-content][hidden]');
     this.dataset.playing = String(running);
     if (running === this.running) return;
     this.running = running;

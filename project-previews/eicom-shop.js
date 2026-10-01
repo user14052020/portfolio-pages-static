@@ -1,4 +1,5 @@
 import { ICONS } from './eicom-icons.js';
+import { renderPreview } from './preview-styles.js';
 import { FEATURES, FEATURE_MS, featureMap, featureScene, updateFeature } from './eicom-improvements.js';
 
 const STYLESHEET = new URL('./eicom-shop.css', import.meta.url).href;
@@ -63,6 +64,7 @@ class EicomShopPreview extends HTMLElement {
       if (this.motion.matches) { this.setPlaying(false); this.elapsed=FEATURE_MS-1; updateFeature(this); }
     },options);
     document.addEventListener('visibilitychange',()=>this.syncClock(),options);
+    this.shadowRoot.addEventListener('previewstylesready',()=>this.syncClock(),options);
     this.render();
     this.observer=new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;this.syncClock();},{threshold:.12});
     this.observer.observe(this);
@@ -70,7 +72,7 @@ class EicomShopPreview extends HTMLElement {
   disconnectedCallback() { this.abort?.abort(); this.observer?.disconnect(); cancelAnimationFrame(this.frame); this.running=false; }
   attributeChangedCallback(name,oldValue,value) { if (oldValue!==value&&this.isConnected&&this.abort) this.render(); }
   render() {
-    this.shadowRoot.innerHTML=`<link rel="stylesheet" href="${STYLESHEET}"><link rel="stylesheet" href="${FEATURE_STYLESHEET}"><div class="preview">${featureMap(this)}<section class="app-window" aria-label="${this.text('Эиком: выполненные работы','Eicom: delivered improvements')}"><header class="brand-bar"><div class="brand"><img src="${ASSETS}logo.svg" alt=""><strong>Эиком</strong></div><span class="brand-caption" data-detail-title></span><span class="demo-badge">DEMO</span><button class="account-link" data-action="account">${icon('user')}<span>${this.text('Личный кабинет','My account')}</span></button></header><div class="workspace"><div class="scene" id="eicom-panel" role="tabpanel"></div></div><footer class="app-footer"><span>${icon('check')}${this.text('Демонстрационные данные','Sample data')}</span><span data-view-title></span></footer></section><div class="playback"><span data-counter></span><div class="progress"><i></i></div><button class="tool" data-action="previous" aria-label="${this.text('Предыдущий блок Эиком','Previous Eicom feature')}" title="${this.text('Предыдущий блок','Previous feature')}">${icon('left')}</button><button class="tool play-toggle" data-action="play"></button><button class="tool" data-action="next" aria-label="${this.text('Следующий блок Эиком','Next Eicom feature')}" title="${this.text('Следующий блок','Next feature')}">${icon('right')}</button></div><div class="case-footer"><details><summary>${this.text('О проекте','About the project')}</summary><p>${esc(this.getAttribute('description')||'')}</p></details><a href="${esc(this.siteUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Открыть сайт','Visit website')}${icon('external')}</a></div></div>`;
+    renderPreview(this.shadowRoot, [STYLESHEET, FEATURE_STYLESHEET], `<div class="preview">${featureMap(this)}<section class="app-window" aria-label="${this.text('Эиком: выполненные работы','Eicom: delivered improvements')}"><header class="brand-bar"><div class="brand"><img src="${ASSETS}logo.svg" alt=""><strong>Эиком</strong></div><span class="brand-caption" data-detail-title></span><span class="demo-badge">DEMO</span><button class="account-link" data-action="account">${icon('user')}<span>${this.text('Личный кабинет','My account')}</span></button></header><div class="workspace"><div class="scene" id="eicom-panel" role="tabpanel"></div></div><footer class="app-footer"><span>${icon('check')}${this.text('Демонстрационные данные','Sample data')}</span><span data-view-title></span></footer></section><div class="playback"><span data-counter></span><div class="progress"><i></i></div><button class="tool" data-action="previous" aria-label="${this.text('Предыдущий блок Эиком','Previous Eicom feature')}" title="${this.text('Предыдущий блок','Previous feature')}">${icon('left')}</button><button class="tool play-toggle" data-action="play"></button><button class="tool" data-action="next" aria-label="${this.text('Следующий блок Эиком','Next Eicom feature')}" title="${this.text('Следующий блок','Next feature')}">${icon('right')}</button></div><div class="case-footer"><details><summary>${this.text('О проекте','About the project')}</summary><p>${esc(this.getAttribute('description')||'')}</p></details><a href="${esc(this.siteUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Открыть сайт','Visit website')}${icon('external')}</a></div></div>`, this.english);
     this.shadowRoot.querySelector('.account-link').setAttribute('aria-label',this.text('Личный кабинет Эиком','Eicom customer account'));
     this.renderScene(false); this.updatePlayButton();
   }
@@ -130,7 +132,7 @@ class EicomShopPreview extends HTMLElement {
     button.innerHTML=icon(this.requestedPlay?'pause':'play'); button.setAttribute('aria-label',label); button.setAttribute('aria-pressed',String(this.requestedPlay)); button.title=label;
   }
   syncClock() {
-    const running=this.isConnected&&this.requestedPlay&&this.visible&&!document.hidden;
+    const running=this.isConnected&&this.requestedPlay&&this.visible&&!document.hidden&&!this.shadowRoot.querySelector('[data-preview-content][hidden]');
     this.dataset.playing=String(running);
     if (running===this.running) return;
     this.running=running; cancelAnimationFrame(this.frame);

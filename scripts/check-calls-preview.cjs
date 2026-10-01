@@ -14,6 +14,7 @@ const context = vm.createContext({
   URL,
 });
 vm.runInContext(source.replace("import { ICONS } from './calls-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
+  .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
   .replace("new URL('./calls-llm.css', import.meta.url).href", "'calls-llm.css'")
   + '\nthis.Preview = CallsLlmPreview; this.escapeText = esc; this.formatTime = time;', context);
 const preview = new context.Preview();

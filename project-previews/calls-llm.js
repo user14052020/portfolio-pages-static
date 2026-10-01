@@ -1,4 +1,5 @@
 import { ICONS } from './calls-icons.js';
+import { renderPreview } from './preview-styles.js';
 
 const STYLESHEET = new URL('./calls-llm.css', import.meta.url).href;
 const DURATIONS = [4000, 6000, 2600, 6800];
@@ -77,6 +78,7 @@ class CallsLlmPreview extends HTMLElement {
       this.update();
     }, options);
     document.addEventListener('visibilitychange', () => this.syncClock(), options);
+    this.shadowRoot.addEventListener('previewstylesready', () => this.syncClock(), options);
     this.motion.addEventListener('change', () => {
       if (this.motion.matches) this.setPlaying(false);
     }, options);
@@ -100,8 +102,7 @@ class CallsLlmPreview extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="${STYLESHEET}">
+    renderPreview(this.shadowRoot, [STYLESHEET], `
       <div class="preview">
         <div class="pipeline" role="group" aria-label="${this.text('Обработка звонка', 'Call processing')}">
           ${STAGES.map((stage, index) => `<div class="stage-wrap"><button type="button" class="stage stage-${index}" data-stage="${index}" aria-label="${this.text('Этап', 'Stage')} ${index + 1}: ${this.local(stage.name)}" title="${this.local(stage.name)}"><span class="stage-icon">${icon(stage.icon)}</span><span class="stage-text"><strong>${this.local(stage.name)}</strong><small>${this.local(stage.detail)}</small></span><span class="stage-index">0${index + 1}</span><i class="stage-progress"></i></button>${index < 3 ? `<span class="connector" aria-hidden="true">${icon('arrow')}<i></i></span>` : ''}</div>`).join('')}
@@ -123,7 +124,7 @@ class CallsLlmPreview extends HTMLElement {
         </section>
         <div class="playback-controls"><label class="scenario-select"><span>${this.text('Звонок', 'Call')}</span><select data-example aria-label="${this.text('Пример звонка', 'Call example')}">${CALLS.map((call, index) => `<option value="${index}"${index === this.example ? ' selected' : ''}>${this.local(call.subject)}</option>`).join('')}</select></label><span class="step-counter" data-counter></span><div class="progress-track"><i></i></div><button type="button" class="icon-button" data-action="replay" title="${this.text('Повторить', 'Replay')}" aria-label="${this.text('Повторить обработку звонка', 'Replay call processing')}">${icon('replay')}</button><button type="button" class="icon-button play-toggle" data-action="play"></button></div>
         <p class="description">${esc(this.getAttribute('description') || '')}</p>
-      </div>`;
+      </div>`, this.english);
     this.renderCustomer();
     this.update();
     this.updatePlayButton();
@@ -237,7 +238,7 @@ class CallsLlmPreview extends HTMLElement {
   }
 
   syncClock() {
-    const running = this.isConnected && this.requestedPlay && this.visible && !document.hidden;
+    const running = this.isConnected && this.requestedPlay && this.visible && !document.hidden && !this.shadowRoot.querySelector('[data-preview-content][hidden]');
     this.dataset.playing = String(running);
     if (running === this.running) return;
     this.running = running;

@@ -20,6 +20,7 @@ const context = vm.createContext({
 });
 vm.runInContext(
   moduleSource.replace("import { ICONS } from './dental-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
+    .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
     .replace("new URL('./dental-crm.css', import.meta.url).href", "'dental-crm.css'")
     + '\nthis.Preview = DentalCrmPreview; this.escapeText = esc;',
   context,

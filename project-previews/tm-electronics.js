@@ -1,4 +1,5 @@
 import { ICONS } from './tm-icons.js';
+import { renderPreview } from './preview-styles.js';
 
 const CSS = new URL('./tm-electronics.css', import.meta.url).href;
 const ASSETS = new URL('./tm-assets/', import.meta.url).href;
@@ -66,6 +67,7 @@ class TmElectronicsPreview extends HTMLElement {
       if(event.target.matches('[data-quantity]')) this.setQuantity(event.target.value);
     },options);
     document.addEventListener('visibilitychange',()=>this.syncClock(),options);
+    this.shadowRoot.addEventListener('previewstylesready',()=>this.syncClock(),options);
     this.motion.addEventListener('change',()=>{if(this.motion.matches){this.pause();this.elapsed=DURATION-1;this.updateAnimation();}},options);
     this.render();
     this.observer = new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;this.syncClock();},{threshold:.12});
@@ -74,7 +76,7 @@ class TmElectronicsPreview extends HTMLElement {
   disconnectedCallback() {this.abort?.abort();this.observer?.disconnect();cancelAnimationFrame(this.frame);this.running=false;}
   attributeChangedCallback(name,before,after) {if(before!==after && this.isConnected && this.abort) this.render();}
   render() {
-    this.shadowRoot.innerHTML=`<link rel="stylesheet" href="${CSS}"><div class="preview">
+    renderPreview(this.shadowRoot, [CSS], `<div class="preview">
       <nav class="feature-map" role="tablist" aria-label="${this.text('Доработки ТМ Электроникс','TM Electronics improvements')}">${FEATURES.map(([id,ru,en,glyph,subRu,subEn],index)=>`<div class="feature-node"><button role="tab" id="tm-${id}" aria-controls="tm-detail" data-feature="${index}"><span class="node-icon">${icon(glyph)}</span><strong>${this.text(ru,en)}</strong><small>${this.text(subRu,subEn)}</small><span class="node-number">0${index+1}</span></button><i class="node-wire"></i></div>`).join('')}</nav>
       <div class="bridge"><span>${icon('down')}</span></div>
       <section class="detail-window" aria-label="${this.text('ТМ Электроникс: схема доработок','TM Electronics: improvement diagram')}">
@@ -84,7 +86,7 @@ class TmElectronicsPreview extends HTMLElement {
       </section>
       <div class="playback"><span class="feature-counter"></span><div class="progress"><i></i></div><button class="tool" data-action="replay" aria-label="${this.text('Повторить анимацию','Replay animation')}" title="${this.text('Повторить','Replay')}">${icon('replay')}</button><button class="tool play" data-action="play"></button></div>
       <div class="case-footer"><p>${escape(this.getAttribute('description')||'')}</p><a href="${escape(this.siteUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Открыть сайт','Visit website')}${icon('external')}</a></div>
-    </div>`;
+    </div>`, this.english);
     this.renderScene();
     this.updatePlayButton();
   }
@@ -189,7 +191,7 @@ class TmElectronicsPreview extends HTMLElement {
     this.setAttribute('data-playing',String(!!this.wanted));
   }
   syncClock() {
-    const running=!!(this.wanted&&this.visible&&!document.hidden);
+    const running=!!(this.wanted&&this.visible&&!document.hidden&&!this.shadowRoot.querySelector('[data-preview-content][hidden]'));
     if(running===this.running) return;
     this.running=running;this.lastTime=0;cancelAnimationFrame(this.frame);
     this.setAttribute('data-running',String(running));

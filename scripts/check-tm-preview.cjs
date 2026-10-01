@@ -12,6 +12,7 @@ const context = vm.createContext({
   requestAnimationFrame: () => 1, cancelAnimationFrame: () => {}, document: {hidden: false},
 });
 vm.runInContext(source.replace("import { ICONS } from './tm-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
+  .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
   .replaceAll('import.meta.url', "'https://example.com/project-previews/tm-electronics.js'")
   + '\nthis.Preview=TmElectronicsPreview;this.escapeHtml=escape;', context);
 const preview = new context.Preview();
