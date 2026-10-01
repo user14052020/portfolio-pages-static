@@ -661,8 +661,8 @@
     "title_en": "FURNITURE",
     "summary_ru": "МАГАЗИН",
     "summary_en": "SHOP",
-    "description_ru": "Я отвечал за направление 1С: дорабатывал стандартный функционал, учётные процессы, организацию и обновление каталога товаров, а также интеграции 1С с сайтом, доставкой и внешними сервисами. ",
-    "description_en": "I participated in the development of the project from the zero stage and was responsible for the 1C direction: I set up basic data, accounting processes, organization and updating of the product catalog, as well as 1C integration with the website, delivery and external services.",
+    "description_ru": "Клиент обратился за сопровождением 1С: обмен с сайтом на Битрикс, Google Таблицами и службой доставки, автоматизация закрытия заказов и интеграция Яндекс Карт.",
+    "description_en": "Supported the client’s existing 1C system: data exchange with a Bitrix store, Google Sheets and a delivery service, automated order closing and Yandex Maps integration.",
     "stack": [
       "1С",
       "1С-bitrix"

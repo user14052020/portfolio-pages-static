@@ -1,0 +1,5 @@
+article:has(furniture-1c-preview) { --project-surface:#f3f7f5;--project-bg:#f3f7f5;--project-text:#5c7870;--project-control-fill:#a15d5a;background:#f3f7f5!important;color:#304a43!important; }
+article:has(furniture-1c-preview) h2 {color:#304a43!important;}
+article:has(furniture-1c-preview) h2 span:last-child {color:#7c9187!important;}
+article:has(furniture-1c-preview)>div {width:100%;}
+furniture-1c-preview {display:block;min-width:0;}
