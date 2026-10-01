@@ -54,3 +54,15 @@ The demo link is `https://shifts.maharram.ru/`. Source assets are in `apps/front
 ```powershell
 node scripts/check-shifts-preview.cjs
 ```
+
+## Eicom / Radio Components Showcase
+
+The `radio-components` project uses `eicom-shop-preview`. Nine connected feature tabs select animated explanations on hover, focus or tap: product 360, reward points, delivery, partner APIs, query optimization, bug fixes, CRM synchronization, an AI assistant and the customer account. Playback loops the selected feature and pauses offscreen or in a hidden document; reduced-motion users get completed diagrams and manual playback.
+
+The 360 viewer uses 24 distinct photographs from `https://eicom.ru/product/D2D-1000/`, stored locally in `project-previews/eicom-assets/spin-d2d-1000/`. It supports automatic rotation, pointer dragging, an angle slider and step controls. No external viewer, iframe or runtime request is required. The assistant demonstrates product selection, specification questions, checkout guidance and order status with fictional local conversations. No AI call or order submission takes place.
+
+The previous whole-site page tour is replaced with focused improvement diagrams, following the TM Electronics showcase. The account is one compact preview of orders, reward points, promo codes and BOM matching, not a separate navigation system. Keep `eicom-shop.js`, `eicom-shop.css`, `eicom-improvements.js` and `eicom-improvements.css` synchronized with `apps/frontend/public/project-previews/`. No application build is required.
+
+```powershell
+node scripts/check-eicom-preview.cjs
+```
