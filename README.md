@@ -44,3 +44,13 @@ The source assets and React wrapper follow the same locations as the dental prev
 ```powershell
 node scripts/check-calls-preview.cjs
 ```
+
+## Work Schedule / CRM Showcase
+
+The `work-schedule-crm` project uses the native `shifts-crm-preview` component. It recreates six screenshot views: crew schedule, employee directory, site search, vacations, yearly archive and activity log. Tabs, crew selection, filtering, personal employee access, sample leave and CSV exports work with fictional local data. Playback pauses offscreen, in hidden tabs and for reduced-motion preferences.
+
+The demo link is `https://shifts.maharram.ru/`. Source assets are in `apps/frontend/public/project-previews/shifts-*` with `ShiftsCrmPreview.tsx` as the React wrapper. Existing project galleries are retained on the project detail page. No application build is required for this static update.
+
+```powershell
+node scripts/check-shifts-preview.cjs
+```
