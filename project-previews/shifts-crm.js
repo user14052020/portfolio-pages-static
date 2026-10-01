@@ -116,6 +116,7 @@ class ShiftsCrmPreview extends HTMLElement {
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
     this.shadowRoot.innerHTML = `<link rel="stylesheet" href="${STYLESHEET}"><div class="preview">
+      ${this.projectStory()}
       <section class="app-window" aria-label="${this.text('График: интерактивный макет CRM', 'Schedule: interactive CRM preview')}">
         <header class="app-header"><strong class="brand">${icon('calendar')}${this.text('график', 'schedule')}</strong><span class="app-caption">${this.text('Учет работы бригад', 'Crew scheduling')}</span><span class="demo-badge">DEMO</span><label class="role-select">${icon('user')}<select data-role aria-label="${this.text('Роль пользователя', 'User role')}"><option value="manager"${this.accessRole === 'manager' ? ' selected' : ''}>${this.text('Менеджер', 'Manager')}</option><option value="employee"${this.accessRole === 'employee' ? ' selected' : ''}>${this.text('Сотрудник · Игорь В', 'Employee · Igor V')}</option></select></label></header>
         <nav class="app-nav" role="tablist" aria-label="${this.text('Страницы графика работ', 'Work schedule pages')}">${PAGES.map(([id, ru, en, glyph], index) => this.allowed.includes(index) ? `<button type="button" role="tab" id="shifts-${id}" class="page-tab" data-page="${index}" aria-controls="shifts-panel">${icon(glyph)}<span>${index === 0 && this.accessRole === 'employee' ? this.text('Мой график', 'My schedule') : this.text(ru, en)}</span></button>` : '').join('')}</nav>
@@ -123,10 +124,20 @@ class ShiftsCrmPreview extends HTMLElement {
         <footer class="app-footer"><span>${icon('check')}${this.text('Демонстрационные данные', 'Sample data')}</span><span data-page-title></span></footer>
       </section>
       <div class="playback"><span class="page-counter" data-counter></span><div class="markers">${this.allowed.map(index => `<button type="button" data-page="${index}" class="marker" aria-label="${this.text(PAGES[index][1], PAGES[index][2])}" title="${this.text(PAGES[index][1], PAGES[index][2])}"></button>`).join('')}</div><div class="progress"><i></i></div><button type="button" class="icon-button" data-action="previous" aria-label="${this.text('Предыдущая страница графика', 'Previous schedule page')}" title="${this.text('Предыдущая страница', 'Previous page')}">${icon('left')}</button><button type="button" class="icon-button play-toggle" data-action="play"></button><button type="button" class="icon-button" data-action="next" aria-label="${this.text('Следующая страница графика', 'Next schedule page')}" title="${this.text('Следующая страница', 'Next page')}">${icon('right')}</button></div>
-      <div class="case-footer"><div class="case-copy"><p>${esc(description[0] || '')}</p>${description.length > 1 ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.slice(1).join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
+      <div class="case-footer"><div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
     </div>`;
     this.renderScene(false);
     this.updatePlayButton();
+  }
+
+  projectStory() {
+    const stages = [
+      ['calendar', 'Было', 'Before', 'Google Таблицы', 'Google Sheets', 'Общее расписание сотрудников', 'Shared employee schedule'],
+      ['users', 'Потребность', 'Need', 'Доступ каждому', 'Individual access', 'К своим работам и пояснениям', 'To their own jobs and instructions'],
+      ['calendar', 'Решение', 'Solution', 'Собственная CRM', 'Dedicated CRM', 'Менеджер управляет расписанием', 'Manager maintains the schedule'],
+      ['user', 'Результат', 'Result', 'Мой график', 'My schedule', 'Свои смены, задания и пояснения. Без лишней информации.', 'Own shifts, tasks and instructions. No unrelated information.'],
+    ];
+    return `<ol class="project-story" aria-label="${this.text('От общего расписания к личному доступу', 'From a shared schedule to individual access')}">${stages.map(([glyph,ru,en,titleRu,titleEn,copyRu,copyEn],index) => `<li class="story-step" data-story-step="${index}"><span class="story-icon">${icon(glyph)}</span><div><span class="story-label">${this.text(ru,en)}</span><strong>${this.text(titleRu,titleEn)}</strong><p>${this.text(copyRu,copyEn)}</p></div>${index < stages.length - 1 ? `<span class="story-connector" aria-hidden="true"><i></i>${icon('right')}</span>` : ''}</li>`).join('')}</ol>`;
   }
 
   heading(title, subtitle, actions = '') {
