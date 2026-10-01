@@ -1,0 +1,5 @@
+article:has(tm-electronics-preview) { --project-surface:#f0f5f7;--project-text:#597482;background:#f0f5f7!important;color:#293b47!important; }
+article:has(tm-electronics-preview) h2 {color:#293b47!important;}
+article:has(tm-electronics-preview) h2 span:last-child {color:#71899a!important;}
+article:has(tm-electronics-preview)>div {width:100%;}
+tm-electronics-preview {display:block;min-width:0;}
