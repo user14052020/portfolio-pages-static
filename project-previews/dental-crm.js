@@ -1,5 +1,5 @@
 import { ICONS } from './dental-icons.js';
-import { renderPreview } from './preview-styles.js';
+import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 
 const STEP_MS = 6500;
 const STYLESHEET = new URL('./dental-crm.css', import.meta.url).href;
@@ -72,6 +72,7 @@ class DentalCrmPreview extends HTMLElement {
   }
 
   disconnectedCallback() {
+    stopPreviewLoading(this.shadowRoot);
     this.abort?.abort();
     this.observer?.disconnect();
     cancelAnimationFrame(this.frame);

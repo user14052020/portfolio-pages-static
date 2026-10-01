@@ -15,7 +15,7 @@ const bundledImprovements=improvements
   .replaceAll('export const','const').replaceAll('export function','function');
 const context=vm.createContext({HTMLElement:class { attachShadow(){} set role(value){throw Error('Reflected attributes are not allowed in constructors');} },customElements:{get:()=>true},URL,Intl,requestAnimationFrame:()=>1,cancelAnimationFrame:()=>{},document:{hidden:false},performance:{now:()=>0}});
 vm.runInContext(source.replace("import { ICONS } from './eicom-icons.js';",icons.replace('export const ICONS','const ICONS'))
-  .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
+  .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
   .replace("import { FEATURES, FEATURE_MS, featureMap, featureScene, updateFeature } from './eicom-improvements.js';",bundledImprovements)
   .replaceAll('import.meta.url',"'https://example.com/project-previews/eicom-shop.js'")+'\nthis.Preview=EicomShopPreview;this.esc=esc;this.FEATURES=FEATURES;this.featureScene=featureScene;this.featureMap=featureMap;this.updateFeature=updateFeature;',context);
 const preview=new context.Preview();

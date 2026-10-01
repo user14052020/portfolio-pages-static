@@ -41,6 +41,9 @@ All five animated project previews share `project-previews/preview-styles.js`.
 Shadow-root stylesheets are retained across renders. An inline paint gate keeps
 content hidden and unfocusable until every required stylesheet has loaded, with
 a bounded loading placeholder and an explicit retry state on network errors.
+The loading placeholder uses JS-driven Web Animations for its spinner, dots,
+indeterminate progress sweep and skeleton highlights. Animations stop on load,
+error, unmount or backgrounding, and respect reduced-motion preferences.
 This prevents unstyled, oversized SVG icons on cold loads and project changes.
 Animation clocks start only after the styled content is visible.
 Keep the shared helper synchronized with the canonical source assets.

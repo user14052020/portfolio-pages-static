@@ -1,5 +1,5 @@
 import { ICONS } from './shifts-icons.js';
-import { renderPreview } from './preview-styles.js';
+import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 
 const STYLESHEET = new URL('./shifts-crm.css', import.meta.url).href;
 const STEP_MS = 6500;
@@ -98,6 +98,7 @@ class ShiftsCrmPreview extends HTMLElement {
   }
 
   disconnectedCallback() {
+    stopPreviewLoading(this.shadowRoot);
     this.abort?.abort();
     this.observer?.disconnect();
     cancelAnimationFrame(this.frame);

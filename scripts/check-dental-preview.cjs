@@ -20,7 +20,7 @@ const context = vm.createContext({
 });
 vm.runInContext(
   moduleSource.replace("import { ICONS } from './dental-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
-    .replace("import { renderPreview } from './preview-styles.js';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; };')
+    .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
     .replace("new URL('./dental-crm.css', import.meta.url).href", "'dental-crm.css'")
     + '\nthis.Preview = DentalCrmPreview; this.escapeText = esc;',
   context,

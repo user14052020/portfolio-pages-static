@@ -1,5 +1,5 @@
 import { ICONS } from './calls-icons.js';
-import { renderPreview } from './preview-styles.js';
+import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 
 const STYLESHEET = new URL('./calls-llm.css', import.meta.url).href;
 const DURATIONS = [4000, 6000, 2600, 6800];
@@ -91,6 +91,7 @@ class CallsLlmPreview extends HTMLElement {
   }
 
   disconnectedCallback() {
+    stopPreviewLoading(this.shadowRoot);
     this.abort?.abort();
     this.observer?.disconnect();
     cancelAnimationFrame(this.frame);

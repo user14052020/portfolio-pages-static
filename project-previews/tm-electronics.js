@@ -1,5 +1,5 @@
 import { ICONS } from './tm-icons.js';
-import { renderPreview } from './preview-styles.js';
+import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 
 const CSS = new URL('./tm-electronics.css', import.meta.url).href;
 const ASSETS = new URL('./tm-assets/', import.meta.url).href;
@@ -73,7 +73,7 @@ class TmElectronicsPreview extends HTMLElement {
     this.observer = new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;this.syncClock();},{threshold:.12});
     this.observer.observe(this);
   }
-  disconnectedCallback() {this.abort?.abort();this.observer?.disconnect();cancelAnimationFrame(this.frame);this.running=false;}
+  disconnectedCallback() {stopPreviewLoading(this.shadowRoot);this.abort?.abort();this.observer?.disconnect();cancelAnimationFrame(this.frame);this.running=false;}
   attributeChangedCallback(name,before,after) {if(before!==after && this.isConnected && this.abort) this.render();}
   render() {
     renderPreview(this.shadowRoot, [CSS], `<div class="preview">
