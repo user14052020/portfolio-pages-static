@@ -1,0 +1,2 @@
+article:has(payments-1c-preview)>div { width:100%; }
+payments-1c-preview { display:block; min-width:0; }

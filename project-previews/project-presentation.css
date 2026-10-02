@@ -7,11 +7,11 @@
 .project-article > header { padding-inline: 24px; }
 .project-article > header h2 { flex-wrap: wrap; overflow: visible; white-space: normal; }
 .project-article > header h2 > span { flex-shrink: 1; overflow-wrap: anywhere; }
-.project-article > :not(header, dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview):not(:has(dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview)) { padding-inline: 24px; }
+.project-article > :not(header, dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview, payments-1c-preview):not(:has(dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview, payments-1c-preview)) { padding-inline: 24px; }
 .project-content > :last-child { margin-inline: 24px; }
 .project-band a:focus-visible, .project-band button:focus-visible { outline-color: var(--project-title); }
 @media (max-width: 600px) {
   .portfolio-shell > :not(.portfolio-projects), .project-article > header { padding-inline: 16px; }
-  .project-article > :not(header, dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview):not(:has(dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview)) { padding-inline: 16px; }
+  .project-article > :not(header, dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview, payments-1c-preview):not(:has(dental-crm-preview, calls-llm-preview, shifts-crm-preview, eicom-shop-preview, tm-electronics-preview, furniture-1c-preview, payments-1c-preview)) { padding-inline: 16px; }
   .project-content > :last-child { margin-inline: 16px; }
 }

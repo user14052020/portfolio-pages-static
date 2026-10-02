@@ -37,7 +37,7 @@ node scripts/check-dental-preview.cjs
 
 ## Calls / LLM Showcase
 
-All seven animated project previews share `project-previews/preview-styles.js`.
+All eight animated project previews share `project-previews/preview-styles.js`.
 Shadow-root stylesheets are retained across renders. An inline paint gate keeps
 content hidden and unfocusable until every required stylesheet has loaded, with
 a bounded loading placeholder and an explicit retry state on network errors.
@@ -84,6 +84,31 @@ The previous whole-site page tour is replaced with focused improvement diagrams,
 
 ```powershell
 node scripts/check-eicom-preview.cjs
+```
+
+## Payments / 1C Showcase
+
+The `buh-payments-auto` home-page project uses `payments-1c-preview` instead of
+the screenshot gallery. Four connected task blocks reveal matching rules,
+batch document autofill, processing statuses, and the log with duplicate-edit
+protection. Hover, focus, tap, keyboard navigation and playback controls work
+locally. Initial playback tours the tasks; manual selection loops one task.
+
+The sample rule matcher drives every scene consistently. Three fictional
+payments match saved rules, one is skipped with a reason, and an already
+processed document remains unchanged. Sample selection and status filters are
+interactive. No real bank, database, API or financial transaction is involved.
+Original project descriptions and four screenshots remain in the project data
+and the standalone detail page.
+
+Keep `payments-1c.js`, `payments-1c.css`, `payments-host.css` and the
+`Payments1cPreview.tsx` React wrapper synchronized with the canonical frontend.
+The shared stylesheet paint gate prevents unstyled content, and playback stops
+offscreen or in hidden documents. Reduced motion defaults to completed scenes
+with manual navigation. No local application build is required.
+
+```powershell
+node scripts/check-payments-preview.cjs
 ```
 
 ## Furniture / 1C Support Showcase
