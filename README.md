@@ -37,7 +37,7 @@ node scripts/check-dental-preview.cjs
 
 ## Calls / LLM Showcase
 
-All nine animated project previews share `project-previews/preview-styles.js`.
+All ten animated project previews share `project-previews/preview-styles.js`.
 Shadow-root stylesheets are retained across renders. An inline paint gate keeps
 content hidden and unfocusable until every required stylesheet has loaded, with
 a bounded loading placeholder and an explicit retry state on network errors.
@@ -136,6 +136,31 @@ No local application build is required.
 node scripts/check-receipts-preview.cjs
 ```
 
+## Contracts / 1C Showcase
+
+The `buh-contracts-templates` home-page project uses `contracts-1c-preview`
+instead of screenshots. Four linked blocks show the tabular editor replacing
+plain text, structured templates and parameters, a specification populated
+from an invoice, and additional DOCX layouts in the contract print menu.
+The scenes follow the existing description and two original 1C screenshots.
+
+Fictional invoices drive consistent customer details, items, totals and Word
+previews. Heading formatting, two template layouts, parameter highlighting,
+invoice selection, keyboard navigation and playback controls are interactive.
+Hover, focus or tap selects the explanatory scene. Playback pauses offscreen,
+in hidden tabs and while styles load; reduced motion shows the completed state.
+The Word view is an animation, not a real document download or 1C integration.
+Original descriptions and screenshots remain on the standalone project page.
+
+Keep `contracts-1c.js`, `contracts-1c.css`, `contracts-icons.js`,
+`contracts-host.css` and `Contracts1cPreview.tsx` synchronized with the canonical
+frontend. The shared diagram and full-width presentation styles are versioned.
+No local application build is required.
+
+```powershell
+node scripts/check-contracts-preview.cjs
+```
+
 ## Furniture / 1C Support Showcase
 
 The `furniture` project uses `furniture-1c-preview`. Five connected task blocks
@@ -175,7 +200,7 @@ project profiles and the corresponding static data.
 
 ## Shared Diagram Heading
 
-All seven web-project previews display "What was delivered" ("Что было сделано")
+All seven web-project previews and the Payments, Receipts and Contracts 1C previews display "What was delivered" ("Что было сделано")
 above their task blocks. `project-diagram.js` and `project-diagram.css` render
 the shared distribution line and downward arrows, matching each preview's
 palette, column count and responsive breakpoints. Project actions and description

@@ -27,7 +27,7 @@ for (const [slug, [background, ink, accent, accentInk]] of Object.entries(palett
 }
 for (const file of ['index.html', '404.html']) {
   const html = read(file);
-  assert.ok(html.includes('project-presentation.css?v=3'));
+  assert.ok(html.includes('project-presentation.css?v=4'));
   assert.ok(html.includes('class="portfolio-shell w-full py-7"'));
   assert.ok(html.includes('class="portfolio-projects py-6"'));
   const bands = [...html.matchAll(/<section class="project-band[^"\n]*" data-project="([^"]*)" style="([^"]*)"/g)];
