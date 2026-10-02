@@ -9,7 +9,7 @@ section[style*="--project-bg"]:has(tm-electronics-preview) {
   --project-control-border: #bdd0dc !important;
   --project-control-muted: #d9e6ec !important;
 }
-article:has(tm-electronics-preview) h2 {color:#293b47!important;}
+article:has(tm-electronics-preview) h2 {color:#293b47!important;flex-wrap:wrap;overflow:visible;}
 article:has(tm-electronics-preview) h2 span:last-child {color:#71899a!important;}
 article:has(tm-electronics-preview)>div {width:100%;}
 tm-electronics-preview {display:block;min-width:0;}

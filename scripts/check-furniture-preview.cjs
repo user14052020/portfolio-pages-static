@@ -38,7 +38,18 @@ assert.equal((html.match(/role="tab" /g) || []).length, 5);
 assert.ok(html.includes('&lt;img onerror='));
 assert.ok(!html.includes('<img onerror='));
 assert.equal(context.escapeHtml('<a "x">'), '&lt;a &quot;x&quot;&gt;');
-assert.ok(!/href=/.test(html), 'No invented demo link');
+assert.ok(html.includes('href="https://imodern.ru/" target="_blank" rel="noopener noreferrer"'));
+assert.ok(html.includes('Открыть сайт'));
+assert.equal((html.match(/<a href=/g) || []).length, 1);
+assert.ok(html.indexOf('href="https://imodern.ru/"') < html.indexOf('class="project-diagram-heading"'), 'Website link stays above the task map');
+assert.ok(source.includes("'site-url'"));
+for (const url of ['javascript:alert(1)', 'data:text/html,test', 'not a URL']) {
+  attrs['site-url'] = url;
+  assert.equal(preview.siteUrl(), 'https://imodern.ru/', 'Unsafe URLs fall back to the project website');
+}
+attrs['site-url'] = 'https://example.com/store';
+assert.equal(preview.siteUrl(), attrs['site-url'], 'Website URL can be supplied from project JSON');
+delete attrs['site-url'];
 for (const [method, expected] of [['bitrix', 'Битрикс'], ['sheets', 'Google Таблицы'], ['closing', 'Автоматическое закрытие'], ['delivery', 'Служба доставки'], ['maps', 'Яндекс Карты']]) {
   const scene = preview[method]();
   assert.ok(scene.includes(expected), method);
@@ -72,6 +83,7 @@ assert.ok(preview.maps().includes('пр-т Учебный, 8'));
 attrs.locale = 'en';
 preview.render();
 assert.ok(preview.shadowRoot.innerHTML.includes('More about the project'));
+assert.ok(preview.shadowRoot.innerHTML.includes('Visit website'));
 assert.ok(!preview.shadowRoot.innerHTML.includes('Support for an existing 1C system'));
 assert.ok(preview.sheets().includes('Customer orders'));
 assert.ok(preview.closing().includes('Closing conditions checked'));
@@ -138,19 +150,20 @@ assert.ok(read('project-previews/furniture-1c.css').includes('@container furnitu
 assert.ok(fs.statSync(path.join(root, 'media/uploads/4e/55fdc83c5782458bbe96e2461e844cf8.png')).size > 100);
 for (const file of ['index.html', '404.html']) {
   const html = read(file);
-  assert.ok(html.includes('src="/project-previews/furniture-1c.js?v=5"'), 'New project data cannot use a cached furniture-only module');
+  assert.ok(html.includes('src="/project-previews/furniture-1c.js?v=6"'), 'Website buttons cannot use a cached module without links');
   assert.ok(html.includes('href="/project-previews/furniture-host.css?v=2"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))];
   assert.equal(chunks.length, 1);
   const chunk = read('_next/static/chunks/' + chunks[0]);
   assert.equal(chunks[0], `app/page-${crypto.createHash('sha256').update(chunk).digest('hex').slice(0, 16)}.js`);
   for (const tag of ['furniture-1c-preview', 'tm-electronics-preview', 'eicom-shop-preview', 'shifts-crm-preview', 'calls-llm-preview', 'dental-crm-preview']) assert.ok(chunk.includes(tag), tag);
-  assert.ok(chunk.includes('"paints"===n.slug?(0,r.jsx)("furniture-1c-preview",{locale:a,description:m,project:"paints"})'));
+  assert.ok(chunk.includes('"furniture-1c-preview",{locale:a,description:m,"site-url":n.live_url||"https://imodern.ru/"}'));
+  assert.ok(chunk.includes('"paints"===n.slug?(0,r.jsx)("furniture-1c-preview",{locale:a,description:m,project:"paints","site-url":n.live_url||"https://vertical.ru/"})'));
 }
 for (const file of ['data/live-projects.json', 'data/projects.json', 'api/v1/projects/index.html', 'api/v1/projects/furniture/index.html']) {
   const data = JSON.parse(read(file));
   const project = Array.isArray(data) ? data.find(item => item.slug === 'furniture') : data;
-  assert.equal(project.live_url, null);
+  assert.equal(project.live_url, 'https://imodern.ru/');
   assert.ok(project.description_ru.includes('сопровождением 1С'));
   assert.ok(project.description_en.includes('existing 1C system'));
 }
@@ -162,6 +175,9 @@ for (const locale of ['ru', 'en']) {
   attrs.locale = locale;
   preview.render();
   assert.ok(preview.shadowRoot.innerHTML.includes(locale === 'ru' ? 'КРАСКИ' : 'PAINTS'));
+  assert.ok(preview.shadowRoot.innerHTML.includes('href="https://vertical.ru/" target="_blank" rel="noopener noreferrer"'));
+  assert.ok(preview.shadowRoot.innerHTML.includes(locale === 'ru' ? 'Открыть сайт' : 'Visit website'));
+  assert.ok(!preview.shadowRoot.innerHTML.includes('href="https://imodern.ru/"'), 'Paints links to its own website');
   assert.equal((preview.shadowRoot.innerHTML.match(/role="tab" /g) || []).length, 5);
   const scenes = ['bitrix', 'sheets', 'closing', 'delivery', 'maps'].map(name => preview[name]()).join('');
   assert.ok(scenes.includes(locale === 'ru' ? 'Интерьерная краска, 9 л' : 'Interior paint, 9 L'));
@@ -179,7 +195,7 @@ assert.ok(preview.bitrix().includes('Стол «Линия»'), 'The original fu
 for (const file of ['data/live-projects.json', 'data/projects.json', 'api/v1/projects/index.html', 'api/v1/projects/paints/index.html']) {
   const data = JSON.parse(read(file));
   const project = Array.isArray(data) ? data.find(item => item.slug === 'paints') : data;
-  assert.equal(project.live_url, null);
+  assert.equal(project.live_url, 'https://vertical.ru/');
   assert.ok(project.description_ru.includes('магазина красок обратился за сопровождением 1С'));
   assert.ok(project.description_en.includes('paint retailer’s existing 1C system'));
 }

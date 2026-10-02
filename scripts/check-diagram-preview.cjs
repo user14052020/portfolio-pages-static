@@ -43,7 +43,10 @@ assert.ok(css.includes('width: 16px; height: 16px;'), 'Icons have stable dimensi
 assert.ok(css.includes('border-top: 1px solid var(--diagram-line)'));
 for (const profile of Object.keys(profiles)) assert.ok(css.includes(`@container ${profile} (`));
 for (const file of ['index.html', '404.html']) {
-  for (const [module] of Object.values(profiles)) assert.ok(read(file).includes(`src="/project-previews/${module}.js?v=5"`));
+  for (const [module] of Object.values(profiles)) {
+    const version = module === 'furniture-1c' ? 6 : 5;
+    assert.ok(read(file).includes(`src="/project-previews/${module}.js?v=${version}"`));
+  }
 }
 for (const [file, tag, background] of [['tm-host.css', 'tm-electronics-preview', '#f0f5f7'], ['furniture-host.css', 'furniture-1c-preview', '#f3f7f5']]) {
   const source = read(`project-previews/${file}`);
@@ -51,6 +54,6 @@ for (const [file, tag, background] of [['tm-host.css', 'tm-electronics-preview',
   assert.ok(source.includes(`--project-bg: ${background} !important`));
   assert.ok(!/article:has\([^)]*\) \{[^}]*background:/.test(source), 'No inner background rectangle');
   assert.equal(source, fs.readFileSync(path.resolve(root, `../apps/frontend/public/project-previews/${file}`), 'utf8'));
-  assert.ok(read('index.html').includes(`/project-previews/${file}?v=2`));
+  assert.ok(read('index.html').includes(`/project-previews/${file}?v=${file === 'tm-host.css' ? 3 : 2}`));
 }
 console.log('Project diagram header checks passed for all seven web projects.');

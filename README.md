@@ -96,7 +96,8 @@ existing system, not development from scratch.
 
 Scenes use fictional local orders, a schematic map and the existing furniture
 store screenshot. No real orders, maps, delivery or exchange APIs are called.
-The description disclosure remains above the task map; no demo URL is invented.
+The description disclosure and "Visit website" link to `https://imodern.ru/`
+remain above the task map. The website URL is editable through `live_url` in project JSON.
 Playback pauses offscreen and in hidden tabs, and respects reduced motion.
 
 Keep `furniture-1c.js`, `furniture-1c.css` and `furniture-host.css` synchronized
@@ -116,9 +117,10 @@ unchanged. Hover, focus or tap selects the detailed animated explanation below.
 The work covers Bitrix, Google Sheets, order-closing automation, delivery and
 Yandex Maps. No live API requests or database writes are made.
 
-The versioned shared module (`furniture-1c.js?v=5`) prevents the new mount from
+The versioned shared module (`furniture-1c.js?v=6`) prevents the new mount from
 using a cached furniture-only implementation. The description disclosure stays
-at the top. No demo URL is invented. `check-furniture-preview.cjs` validates both
+at the top alongside a "Visit website" link to `https://vertical.ru/`.
+`check-furniture-preview.cjs` validates both
 project profiles and the corresponding static data.
 
 ## Shared Diagram Heading
@@ -130,7 +132,7 @@ palette, column count and responsive breakpoints. Project actions and descriptio
 disclosures remain above it; the existing lower connectors are unchanged.
 The shared stylesheet participates in the preview's loading gate.
 
-Preview module URLs use `?v=5` to avoid cached versions without the shared controls.
+Preview module URLs are versioned to avoid cached versions without the shared controls.
 Keep both shared assets and all preview modules synchronized with the canonical
 frontend public directory. Run `node scripts/check-diagram-preview.cjs` alongside
 the existing checks. No local application build is required.

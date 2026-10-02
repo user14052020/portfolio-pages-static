@@ -2,10 +2,11 @@ import { ICONS } from './tm-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';
 
-const CSS = new URL('./furniture-1c.css', import.meta.url).href;
+const CSS = new URL('./furniture-1c.css?v=2', import.meta.url).href;
 const PROJECTS = {
   furniture: {
     title: ['МЕБЕЛЬ', 'FURNITURE'], label: ['Мебель', 'Furniture'], prefix: 'М',
+    siteUrl: 'https://imodern.ru/',
     image: '/media/uploads/4e/55fdc83c5782458bbe96e2461e844cf8.png', imageSize: [2876, 1644],
     imageAlt: ['Мебельный интернет-магазин клиента', 'Client furniture store'],
     contents: ['Стол и 2 кресла', 'Table and 2 armchairs'],
@@ -16,6 +17,7 @@ const PROJECTS = {
   },
   paints: {
     title: ['КРАСКИ', 'PAINTS'], label: ['Краски', 'Paints'], prefix: 'К',
+    siteUrl: 'https://vertical.ru/',
     image: '/media/uploads/3f/e8f817443c804710b993d6791708a6ee.png', imageSize: [2880, 1638],
     imageAlt: ['Интернет-магазин клиента проекта «Краски»', 'Client store for the Paints project'],
     contents: ['2 банки краски и грунтовка', '2 cans of paint and primer'],
@@ -37,7 +39,7 @@ const esc = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', 
 const icon = name => ICONS[name] || '';
 
 class Furniture1cPreview extends HTMLElement {
-  static observedAttributes = ['locale', 'description', 'project'];
+  static observedAttributes = ['locale', 'description', 'project', 'site-url'];
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -51,6 +53,12 @@ class Furniture1cPreview extends HTMLElement {
   get english() { return this.getAttribute('locale') === 'en'; }
   get project() { return this.getAttribute('project') === 'paints' ? PROJECTS.paints : PROJECTS.furniture; }
   text(ru, en) { return this.english ? en : ru; }
+  siteUrl() {
+    try {
+      const url = new URL(this.getAttribute('site-url') || this.project.siteUrl);
+      return ['http:', 'https:'].includes(url.protocol) ? url.href : this.project.siteUrl;
+    } catch { return this.project.siteUrl; }
+  }
   orderNumber(index = 0) { return `${this.project.prefix}-${1024 + index}`; }
   connectedCallback() {
     this.abort = new AbortController();
@@ -87,7 +95,7 @@ class Furniture1cPreview extends HTMLElement {
   attributeChangedCallback(name, before, after) { if (before !== after && this.isConnected && this.abort) this.render(); }
   render() {
     renderPreview(this.shadowRoot, [CSS, DIAGRAM_STYLESHEET], `<div class="preview">
-      <div class="case-intro"><details>${projectSummary(this.english)}<p>${esc(this.getAttribute('description') || '')}</p></details></div>
+      <div class="case-intro"><details>${projectSummary(this.english)}<p>${esc(this.getAttribute('description') || '')}</p></details><a href="${esc(this.siteUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Открыть сайт', 'Visit website')}${icon('external')}</a></div>
       ${projectHeading('furniture', this.english)}
       <nav class="feature-map" role="tablist" aria-label="${this.text('Задачи сопровождения 1С', '1C support tasks')}">${FEATURES.map(([id, ru, en, glyph, subRu, subEn], index) => `<div class="feature-node"><button type="button" role="tab" id="furniture-${id}" aria-controls="furniture-detail" data-feature="${index}"><span class="node-icon">${icon(glyph)}</span><strong>${this.text(ru, en)}</strong><small>${this.text(subRu, subEn)}</small><span class="node-number">0${index + 1}</span></button><i class="node-wire"></i></div>`).join('')}</nav>
       <div class="bridge" aria-hidden="true">${icon('down')}</div>
