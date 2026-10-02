@@ -2,7 +2,7 @@ import { ICONS } from './calls-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=3';
 
-const STYLESHEET = new URL('./calls-llm.css', import.meta.url).href;
+const STYLESHEET = new URL('./calls-llm.css?v=2', import.meta.url).href;
 const DURATIONS = [4000, 6000, 2600, 6800];
 const STAGES = [
   { icon: 'phone', name: ['Телефония', 'Telephony'], detail: ['Входящие и исходящие звонки', 'Incoming and outgoing calls'] },

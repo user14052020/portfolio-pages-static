@@ -44,7 +44,7 @@ assert.ok(css.includes('border-top: 1px solid var(--diagram-line)'));
 for (const profile of Object.keys(profiles)) assert.ok(css.includes(`@container ${profile} (`));
 for (const file of ['index.html', '404.html']) {
   for (const [module] of Object.values(profiles)) {
-    const version = module === 'furniture-1c' ? 7 : 6;
+    const version = module === 'furniture-1c' || module === 'calls-llm' ? 7 : 6;
     assert.ok(read(file).includes(`src="/project-previews/${module}.js?v=${version}"`));
   }
 }

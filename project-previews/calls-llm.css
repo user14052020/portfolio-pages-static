@@ -105,7 +105,7 @@ dl { margin: 0; }
 .history-list b { margin-left: auto; opacity: 0; color: #418d72; }
 .history-list [data-done="true"] { color: #65848e; }
 .history-list [data-done="true"] b { opacity: 1; }
-.playback-controls { display: flex; align-items: center; gap: 12px; min-height: 65px; padding: 12px 0; }
+.playback-controls { display: flex; align-items: center; gap: 12px; min-height: 65px; padding: 12px 25px; }
 .scenario-select { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #809399; }
 .scenario-select select { max-width: 220px; min-width: 0; border-radius: 5px; border: 1px solid #d0dfe0; color: #537980; padding: 6px 9px; background: #fff; font-size: 11px; }
 .step-counter { font-variant-numeric: tabular-nums; font-size: 10px; color: #80999f; white-space: nowrap; margin-left: 8px; }
