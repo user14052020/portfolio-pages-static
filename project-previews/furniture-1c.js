@@ -1,6 +1,6 @@
 import { ICONS } from './tm-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
-import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';
+import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=3';
 
 const CSS = new URL('./furniture-1c.css?v=2', import.meta.url).href;
 const PROJECTS = {

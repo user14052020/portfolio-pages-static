@@ -1,6 +1,6 @@
 import { ICONS } from './eicom-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
-import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';
+import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=3';
 import { FEATURES, FEATURE_MS, featureMap, featureScene, updateFeature } from './eicom-improvements.js';
 
 const STYLESHEET = new URL('./eicom-shop.css', import.meta.url).href;

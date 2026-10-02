@@ -1,6 +1,6 @@
 import { ICONS } from './shifts-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
-import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';
+import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=3';
 
 const STYLESHEET = new URL('./shifts-crm.css', import.meta.url).href;
 const STEP_MS = 6500;

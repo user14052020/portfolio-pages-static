@@ -1,15 +1,3 @@
-section[style*="--project-bg"]:has(tm-electronics-preview) {
-  --project-bg: #f0f5f7 !important;
-  --project-surface: #f0f5f7;
-  --project-border: #d1dfe5 !important;
-  --project-title: #293b47 !important;
-  --project-text: #597482 !important;
-  --project-divider: #bdd0dc !important;
-  --project-control-fill: #2769ad !important;
-  --project-control-border: #bdd0dc !important;
-  --project-control-muted: #d9e6ec !important;
-}
-article:has(tm-electronics-preview) h2 {color:#293b47!important;flex-wrap:wrap;overflow:visible;}
-article:has(tm-electronics-preview) h2 span:last-child {color:#71899a!important;}
+article:has(tm-electronics-preview) h2 {flex-wrap:wrap;overflow:visible;}
 article:has(tm-electronics-preview)>div {width:100%;}
 tm-electronics-preview {display:block;min-width:0;}

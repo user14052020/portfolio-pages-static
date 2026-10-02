@@ -2,16 +2,6 @@
 
 shifts-crm-preview { display: block; min-width: 0; }
 
-section[style*="--project-bg"]:has(shifts-crm-preview) {
-  --project-bg: #f0f5ee !important;
-  --project-border: #d3dfcf !important;
-  --project-title: #2c4735 !important;
-  --project-text: #627b62 !important;
-  --project-divider: #a1b799 !important;
-  --project-control-fill: #527c53 !important;
-  --project-control-border: #bdd0b6 !important;
-  --project-control-muted: #d8e4d2 !important;
-}
 
 @media (max-width: 420px) {
   section[style*="--project-bg"]:has(shifts-crm-preview) h2 {

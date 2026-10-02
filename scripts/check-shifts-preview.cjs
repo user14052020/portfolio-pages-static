@@ -10,7 +10,7 @@ const icons = read('project-previews/shifts-icons.js');
 const context = vm.createContext({ HTMLElement:class { attachShadow() {} set role(value) { throw new Error('Custom element constructors must not set reflected attributes'); } }, customElements:{get:()=>true}, requestAnimationFrame:()=>42, URL });
 vm.runInContext(source.replace("import { ICONS } from './shifts-icons.js';",icons.replace('export const ICONS','const ICONS'))
   .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
-  .replace("import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';", require('./project-diagram-fixture.cjs'))
+  .replace("import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=3';", require('./project-diagram-fixture.cjs'))
   .replace("new URL('./shifts-crm.css', import.meta.url).href","'shifts-crm.css'")+'\nthis.Preview=ShiftsCrmPreview; this.matching=matching; this.csvCell=csvCell; this.esc=esc;',context);
 const preview = new context.Preview();
 const attrs={locale:'ru'};
@@ -90,7 +90,7 @@ assert.ok(source.includes('disconnectedCallback()'));
 assert.ok(read('project-previews/shifts-crm.css').includes('prefers-reduced-motion'));
 for(const file of ['index.html','404.html']) {
   const html=read(file);
-  assert.ok(html.includes('src="/project-previews/shifts-crm.js?v=5"'));
+  assert.ok(html.includes('src="/project-previews/shifts-crm.js?v=6"'));
   const chunks=[...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))];
   assert.equal(chunks.length,1);
   const chunk=read('_next/static/chunks/'+chunks[0]);

@@ -64,3 +64,43 @@
   [data-diagram="shifts"] .diagram-branches > span:nth-child(n+2) { display: none; }
   [data-diagram="shifts"] .diagram-branches > span:first-child::before { right: 50%; }
 }
+
+/* The case-study canvas inherits its palette; the working UI keeps its own colors. */
+:host { --presentation-gutter: 24px; }
+.case-intro { margin-inline: var(--presentation-gutter); color: var(--project-title); }
+.case-intro .project-details-summary { color: var(--project-title); font-size: 13px; }
+.case-intro p { color: var(--project-text); }
+.case-intro a { color: var(--project-accent-ink); background: var(--project-accent); border: 0; border-radius: 4px; padding: 10px 14px; font-weight: 600; }
+.case-intro a:hover { filter: brightness(1.08); }
+.case-intro a:focus-visible, .case-intro summary:focus-visible { outline: 2px solid var(--project-title); outline-offset: 4px; }
+.project-diagram-heading { margin-inline: var(--presentation-gutter); color: var(--project-title); --diagram-line: var(--project-divider); --diagram-ink: var(--project-title); }
+.project-diagram-heading h3 { font-weight: 600; }
+.project-story, .pipeline, .feature-map, .ef-map { margin-inline: var(--presentation-gutter); }
+.story-step, .stage, .feature-node button, .ef-node button { background: var(--project-card-bg); color: var(--project-title); border-color: var(--project-card-border); box-shadow: none; }
+.story-step strong, .story-step p, .story-step:last-child p, .story-label, .stage small, .stage-index, .feature-node button small, .node-number, .ef-node small, .ef-number { color: inherit; }
+.story-label, .stage-index, .node-number { opacity: .8; }
+.story-step:nth-child(n) .story-icon, .stage .stage-icon, .feature-node:nth-child(n) .node-icon { color: var(--project-accent-ink); background: var(--project-accent); }
+.story-step:last-child, .stage[data-state="active"], .feature-node button[aria-selected="true"], .ef-node button[aria-selected="true"] { color: var(--project-accent-ink); background: var(--project-accent); border-color: var(--project-accent); box-shadow: none; }
+.story-step:last-child strong { color: inherit; }
+.story-step:last-child .story-icon, .stage[data-state="active"] .stage-icon, .feature-node button[aria-selected="true"] .node-icon { color: var(--project-title); background: var(--project-bg); }
+.stage:hover, .feature-node button:hover, .ef-node button:hover { color: var(--project-accent-ink); background: var(--project-accent); border-color: var(--project-accent); }
+.stage[data-state="done"] { border-color: var(--project-accent); }
+.stage[data-state="done"] .stage-index { color: var(--project-title); }
+.stage-progress { background: var(--project-accent-ink); }
+.story-connector, .connector, .bridge { color: var(--project-title); }
+.story-connector::before, .bridge, .bridge::before, .node-wire, .feature-node button[aria-selected="true"] + .node-wire { border-color: var(--project-divider); }
+.node-wire { background: var(--project-divider); }
+.story-connector i, .connector i { background: var(--project-accent); }
+.story-connector svg, .bridge svg, .bridge span { background: var(--project-bg); color: var(--project-title); }
+.transfer-strip, .playback, .preview-footer { margin-inline: var(--presentation-gutter); color: var(--project-title); }
+.signal-copy p, .recording-time, .feature-counter, .playback small, .preview-footer small { color: var(--project-title); }
+.signal-icon, .playback .tool, .preview-footer .tool { color: var(--project-accent-ink); background: var(--project-accent); border-color: transparent; }
+.waveform i, .progress i { background: var(--project-accent); }
+.progress { background: var(--project-card-border); }
+.ef-node:nth-child(n) .ef-icon { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 4px; color: var(--project-accent-ink); background: var(--project-accent); }
+.ef-node button[aria-selected="true"] .ef-icon { color: var(--project-title); background: var(--project-bg); }
+.ef-wire, .ef-bridge::before { background: var(--project-divider); }
+.ef-bridge { border-color: var(--project-divider); }
+.ef-bridge svg { background: var(--project-bg); color: var(--project-title); }
+.crm-window, .arbis-window, .app-window, .detail-window { border-radius: 0; border-inline: 0; box-shadow: none; }
+@media (max-width: 600px) { :host { --presentation-gutter: 16px; } }

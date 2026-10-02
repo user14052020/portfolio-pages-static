@@ -44,16 +44,16 @@ assert.ok(css.includes('border-top: 1px solid var(--diagram-line)'));
 for (const profile of Object.keys(profiles)) assert.ok(css.includes(`@container ${profile} (`));
 for (const file of ['index.html', '404.html']) {
   for (const [module] of Object.values(profiles)) {
-    const version = module === 'furniture-1c' ? 6 : 5;
+    const version = module === 'furniture-1c' ? 7 : 6;
     assert.ok(read(file).includes(`src="/project-previews/${module}.js?v=${version}"`));
   }
 }
-for (const [file, tag, background] of [['tm-host.css', 'tm-electronics-preview', '#f0f5f7'], ['furniture-host.css', 'furniture-1c-preview', '#f3f7f5']]) {
+for (const [file, tag] of [['tm-host.css', 'tm-electronics-preview'], ['furniture-host.css', 'furniture-1c-preview']]) {
   const source = read(`project-previews/${file}`);
-  assert.ok(source.includes(`section[style*="--project-bg"]:has(${tag})`), 'Theme belongs to the full-width project section');
-  assert.ok(source.includes(`--project-bg: ${background} !important`));
+  assert.ok(source.includes(tag));
+  assert.ok(!source.includes('--project-bg:'), 'Host styles do not override the initial per-project palette');
   assert.ok(!/article:has\([^)]*\) \{[^}]*background:/.test(source), 'No inner background rectangle');
   assert.equal(source, fs.readFileSync(path.resolve(root, `../apps/frontend/public/project-previews/${file}`), 'utf8'));
-  assert.ok(read('index.html').includes(`/project-previews/${file}?v=${file === 'tm-host.css' ? 3 : 2}`));
+  assert.ok(read('index.html').includes(`/project-previews/${file}?v=${file === 'tm-host.css' ? 4 : 3}`));
 }
 console.log('Project diagram header checks passed for all seven web projects.');

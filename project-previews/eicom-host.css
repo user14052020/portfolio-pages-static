@@ -1,15 +1,5 @@
 @import url("./dental-fonts.css");
 eicom-shop-preview { display: block; min-width: 0; }
-section[style*="--project-bg"]:has(eicom-shop-preview) {
-  --project-bg: #edf1f5 !important;
-  --project-border: #cfd7df !important;
-  --project-title: #27333d !important;
-  --project-text: #616e7a !important;
-  --project-divider: #a7b4c0 !important;
-  --project-control-fill: #d72a30 !important;
-  --project-control-border: #d3dbe3 !important;
-  --project-control-muted: #dce2e9 !important;
-}
 @media (max-width: 420px) {
   section[style*="--project-bg"]:has(eicom-shop-preview) h2 { flex-wrap: wrap; overflow-x: visible; row-gap: 6px; }
   section[style*="--project-bg"]:has(eicom-shop-preview) h2 > span:first-child { flex-shrink: 1; white-space: normal; }
