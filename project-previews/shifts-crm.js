@@ -1,6 +1,6 @@
 import { ICONS } from './shifts-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
-import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';
+import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';
 
 const STYLESHEET = new URL('./shifts-crm.css', import.meta.url).href;
 const STEP_MS = 6500;
@@ -120,7 +120,7 @@ class ShiftsCrmPreview extends HTMLElement {
   render() {
     const description = (this.getAttribute('description') || '').trim().split(/\n\s*\n/);
     renderPreview(this.shadowRoot, [STYLESHEET, DIAGRAM_STYLESHEET], `<div class="preview">
-      <div class="case-intro"><div class="case-copy">${description[0] ? `<details><summary>${this.text('Подробнее о проекте', 'More about the project')}${icon('down')}</summary><p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
+      <div class="case-intro"><div class="case-copy">${description[0] ? `<details>${projectSummary(this.english)}<p>${esc(description.join('\n\n'))}</p></details>` : ''}</div><a class="demo-link" href="${esc(this.demoUrl())}" target="_blank" rel="noopener noreferrer">${this.text('Перейти к демо', 'Open demo')}${icon('external')}</a></div>
       ${projectHeading('shifts', this.english)}
       ${this.projectStory()}
       <section class="app-window" aria-label="${this.text('График: интерактивный макет CRM', 'Schedule: interactive CRM preview')}">

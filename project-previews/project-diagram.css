@@ -1,4 +1,11 @@
 .project-diagram-heading { --diagram-columns: 4; --diagram-gap: 32px; --diagram-line: #c0d9d5; --diagram-ink: #759891; color: #617e78; margin: 0; }
+.case-intro .project-details-summary { display: flex; align-items: center; gap: 7px; width: fit-content; min-height: 44px; padding: 10px 0; color: #617e78; font-family: inherit; font-size: 12px; font-weight: 400; line-height: 1.5; list-style: none; cursor: pointer; }
+.project-details-summary::marker { content: ''; }
+.project-details-summary::-webkit-details-marker { display: none; }
+.project-details-arrow { display: grid; place-items: center; flex: 0 0 13px; width: 13px; height: 13px; transform: rotate(-90deg); transition: transform .2s; }
+.case-intro .project-details-summary .project-details-arrow svg { display: block; width: 13px; height: 13px; transform: none; }
+.case-intro[open] > .project-details-summary .project-details-arrow, .case-intro details[open] > .project-details-summary .project-details-arrow { transform: rotate(0deg); }
+@media (prefers-reduced-motion: reduce) { .project-details-arrow { transition: none; } }
 .project-diagram-heading h3 { position: relative; margin: 0; padding-bottom: 18px; font-family: inherit; font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; letter-spacing: 0; }
 .project-diagram-heading h3::after { content: ''; position: absolute; left: 50%; bottom: 0; height: 14px; border-left: 1px solid var(--diagram-line); }
 .diagram-branches { display: grid; grid-template-columns: repeat(var(--diagram-columns), minmax(0, 1fr)); gap: var(--diagram-gap); height: 25px; }

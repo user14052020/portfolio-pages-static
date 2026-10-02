@@ -1,4 +1,14 @@
-article:has(furniture-1c-preview) { --project-surface:#f3f7f5;--project-bg:#f3f7f5;--project-text:#5c7870;--project-control-fill:#a15d5a;background:#f3f7f5!important;color:#304a43!important; }
+section[style*="--project-bg"]:has(furniture-1c-preview) {
+  --project-bg: #f3f7f5 !important;
+  --project-surface: #f3f7f5;
+  --project-border: #d1dfd8 !important;
+  --project-title: #304a43 !important;
+  --project-text: #5c7870 !important;
+  --project-divider: #b9ccc5 !important;
+  --project-control-fill: #a15d5a !important;
+  --project-control-border: #cddbd6 !important;
+  --project-control-muted: #dce6e3 !important;
+}
 article:has(furniture-1c-preview) h2 {color:#304a43!important;}
 article:has(furniture-1c-preview) h2 span:last-child {color:#7c9187!important;}
 article:has(furniture-1c-preview)>div {width:100%;}

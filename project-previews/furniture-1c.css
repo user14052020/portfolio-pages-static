@@ -9,7 +9,6 @@ svg { width: 18px; height: 18px; flex-shrink: 0; }
 .case-intro details { flex: 1; min-width: 0; }
 .case-intro summary { width: fit-content; font-size: 12px; padding: 10px 0; color: #617e78; cursor: pointer; }
 .case-intro p { max-width: 850px; margin: 10px 0 0; font-size: 14px; line-height: 1.8; white-space: pre-line; }
-.engagement { font-size: 12px; line-height: 1.5; padding: 10px 0; color: #63807b; }
 .feature-map { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; }
 .feature-node { min-width: 0; position: relative; }
 .feature-node button { position: relative; display: flex; flex-direction: column; align-items: start; width: 100%; min-height: 132px; gap: 9px; text-align: left; padding: 17px 17px 23px; border: 1px solid #d7e3de; border-radius: 6px; color: #3c5350; background: #fff; transition: border-color .2s, background .2s; }
@@ -143,7 +142,6 @@ dd { margin: 0 0 14px; line-height: 1.6; }
 }
 @container furniture (max-width: 550px) {
   .case-intro { flex-direction: column; gap: 0; margin-bottom: 20px; }
-  .engagement { padding-top: 0; font-size: 11px; }
   .feature-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .feature-node:last-child { grid-column: 1 / -1; }
   .feature-node:last-child button { flex-direction: row; align-items: center; min-height: 64px; padding-bottom: 14px; }

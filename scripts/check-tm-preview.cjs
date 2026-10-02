@@ -13,7 +13,7 @@ const context = vm.createContext({
 });
 vm.runInContext(source.replace("import { ICONS } from './tm-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
   .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
-  .replace("import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';", require('./project-diagram-fixture.cjs'))
+  .replace("import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';", require('./project-diagram-fixture.cjs'))
   .replaceAll('import.meta.url', "'https://example.com/project-previews/tm-electronics.js'")
   + '\nthis.Preview=TmElectronicsPreview;this.escapeHtml=escape;', context);
 const preview = new context.Preview();
@@ -32,7 +32,7 @@ assert.equal(preview.siteUrl(), 'https://tmelectronics.ru/');
 assert.equal(context.escapeHtml('<a "x">'), '&lt;a &quot;x&quot;&gt;');
 preview.render();
 assert.ok(/class="preview">\s*<div class="case-intro">/.test(preview.shadowRoot.innerHTML));
-assert.ok(preview.shadowRoot.innerHTML.includes('<details><summary>Подробнее о проекте</summary>'));
+assert.ok(preview.shadowRoot.innerHTML.includes('<details><summary class="project-details-summary">'));
 assert.equal((preview.shadowRoot.innerHTML.match(/class="case-intro"/g)||[]).length,1);
 assert.ok(preview.shadowRoot.innerHTML.indexOf('href="https://tmelectronics.ru/"') < preview.shadowRoot.innerHTML.indexOf('class="feature-map"'), 'Website link precedes the work map');
 assert.equal((preview.shadowRoot.innerHTML.match(/role="tab" /g) || []).length, 7);
@@ -94,7 +94,7 @@ assert.ok(!/\bfetch\s*\(|XMLHttpRequest|<iframe|localStorage/.test(source));
 assert.ok(source.includes('disconnectedCallback()')); assert.ok(source.includes('prefers-reduced-motion'));
 assert.ok(read('project-previews/tm-electronics.css').includes('@container tm'));
 for (const file of ['index.html', '404.html']) {
-  const html = read(file); assert.ok(html.includes('src="/project-previews/tm-electronics.js?v=4"'));
+  const html = read(file); assert.ok(html.includes('src="/project-previews/tm-electronics.js?v=5"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))]; assert.equal(chunks.length, 1);
   const chunk = read('_next/static/chunks/' + chunks[0]);
   assert.equal(chunks[0], `app/page-${crypto.createHash('sha256').update(chunk).digest('hex').slice(0, 16)}.js`);

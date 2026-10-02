@@ -16,7 +16,7 @@ const bundledImprovements=improvements
 const context=vm.createContext({HTMLElement:class { attachShadow(){} set role(value){throw Error('Reflected attributes are not allowed in constructors');} },customElements:{get:()=>true},URL,Intl,requestAnimationFrame:()=>1,cancelAnimationFrame:()=>{},document:{hidden:false},performance:{now:()=>0}});
 vm.runInContext(source.replace("import { ICONS } from './eicom-icons.js';",icons.replace('export const ICONS','const ICONS'))
   .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
-  .replace("import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';", require('./project-diagram-fixture.cjs'))
+  .replace("import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';", require('./project-diagram-fixture.cjs'))
   .replace("import { FEATURES, FEATURE_MS, featureMap, featureScene, updateFeature } from './eicom-improvements.js';",bundledImprovements)
   .replaceAll('import.meta.url',"'https://example.com/project-previews/eicom-shop.js'")+'\nthis.Preview=EicomShopPreview;this.esc=esc;this.FEATURES=FEATURES;this.featureScene=featureScene;this.featureMap=featureMap;this.updateFeature=updateFeature;',context);
 const preview=new context.Preview();
@@ -30,7 +30,7 @@ preview.shadowRoot={innerHTML:'',querySelector:()=>({setAttribute:()=>{}})};
 attrs.description='Sample <script> description';
 preview.render();
 assert.ok(/class="preview">\s*<div class="case-intro">/.test(preview.shadowRoot.innerHTML));
-assert.ok(preview.shadowRoot.innerHTML.includes('<details><summary>Подробнее о проекте</summary>'));
+assert.ok(preview.shadowRoot.innerHTML.includes('<details><summary class="project-details-summary">'));
 assert.equal((preview.shadowRoot.innerHTML.match(/class="case-intro"/g)||[]).length,1);
 assert.ok(preview.shadowRoot.innerHTML.indexOf('href="https://eicom.ru/"') < preview.shadowRoot.innerHTML.indexOf('class="ef-map"'), 'Website actions precede the feature map');
 assert.ok(preview.shadowRoot.innerHTML.includes('Sample &lt;script&gt; description'));
@@ -149,7 +149,7 @@ assert.ok(source.includes('prefers-reduced-motion'));
 assert.ok(read('project-previews/eicom-shop.css').includes('@container eicom'));
 for(const file of ['index.html','404.html']) {
   const html=read(file);
-  assert.ok(html.includes('src="/project-previews/eicom-shop.js?v=4"'));
+  assert.ok(html.includes('src="/project-previews/eicom-shop.js?v=5"'));
   const chunks=[...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))]; assert.equal(chunks.length,1);
   const chunk=read('_next/static/chunks/'+chunks[0]);
   assert.equal(chunks[0],`app/page-${crypto.createHash('sha256').update(chunk).digest('hex').slice(0,16)}.js`);

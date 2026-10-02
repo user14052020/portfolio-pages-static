@@ -15,7 +15,7 @@ const context = vm.createContext({
 });
 vm.runInContext(source.replace("import { ICONS } from './tm-icons.js';", icons.replace('export const ICONS', 'const ICONS'))
   .replace("import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';", 'const renderPreview = (root, urls, markup) => { root.innerHTML = markup; }; const stopPreviewLoading = () => {};')
-  .replace("import { projectHeading, DIAGRAM_STYLESHEET } from './project-diagram.js';", require('./project-diagram-fixture.cjs'))
+  .replace("import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=2';", require('./project-diagram-fixture.cjs'))
   .replaceAll('import.meta.url', "'https://example.com/project-previews/furniture-1c.js'")
   + '\nthis.Preview=Furniture1cPreview;this.escapeHtml=esc;', context);
 const preview = new context.Preview();
@@ -31,8 +31,9 @@ preview.renderScene = preview.updatePlayButton = preview.syncClock = () => {};
 preview.render();
 const html = preview.shadowRoot.innerHTML;
 assert.ok(/class="preview">\s*<div class="case-intro">/.test(html));
-assert.ok(html.includes('<details><summary>Подробнее о проекте</summary>'));
-assert.ok(html.includes('Сопровождение существующей 1С'));
+assert.ok(html.includes('<details><summary class="project-details-summary">'));
+assert.ok(!html.includes('Сопровождение существующей 1С'));
+assert.ok(!html.includes('class="engagement"'));
 assert.equal((html.match(/role="tab" /g) || []).length, 5);
 assert.ok(html.includes('&lt;img onerror='));
 assert.ok(!html.includes('<img onerror='));
@@ -71,7 +72,7 @@ assert.ok(preview.maps().includes('пр-т Учебный, 8'));
 attrs.locale = 'en';
 preview.render();
 assert.ok(preview.shadowRoot.innerHTML.includes('More about the project'));
-assert.ok(preview.shadowRoot.innerHTML.includes('Support for an existing 1C system'));
+assert.ok(!preview.shadowRoot.innerHTML.includes('Support for an existing 1C system'));
 assert.ok(preview.sheets().includes('Customer orders'));
 assert.ok(preview.closing().includes('Closing conditions checked'));
 assert.ok(preview.delivery().includes('Delivery service'));
@@ -137,8 +138,8 @@ assert.ok(read('project-previews/furniture-1c.css').includes('@container furnitu
 assert.ok(fs.statSync(path.join(root, 'media/uploads/4e/55fdc83c5782458bbe96e2461e844cf8.png')).size > 100);
 for (const file of ['index.html', '404.html']) {
   const html = read(file);
-  assert.ok(html.includes('src="/project-previews/furniture-1c.js?v=4"'), 'New project data cannot use a cached furniture-only module');
-  assert.ok(html.includes('href="/project-previews/furniture-host.css"'));
+  assert.ok(html.includes('src="/project-previews/furniture-1c.js?v=5"'), 'New project data cannot use a cached furniture-only module');
+  assert.ok(html.includes('href="/project-previews/furniture-host.css?v=2"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))];
   assert.equal(chunks.length, 1);
   const chunk = read('_next/static/chunks/' + chunks[0]);

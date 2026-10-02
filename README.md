@@ -116,7 +116,7 @@ unchanged. Hover, focus or tap selects the detailed animated explanation below.
 The work covers Bitrix, Google Sheets, order-closing automation, delivery and
 Yandex Maps. No live API requests or database writes are made.
 
-The versioned shared module (`furniture-1c.js?v=4`) prevents the new mount from
+The versioned shared module (`furniture-1c.js?v=5`) prevents the new mount from
 using a cached furniture-only implementation. The description disclosure stays
 at the top. No demo URL is invented. `check-furniture-preview.cjs` validates both
 project profiles and the corresponding static data.
@@ -130,7 +130,12 @@ palette, column count and responsive breakpoints. Project actions and descriptio
 disclosures remain above it; the existing lower connectors are unchanged.
 The shared stylesheet participates in the preview's loading gate.
 
-Preview module URLs use `?v=4` to avoid cached versions without the heading.
+Preview module URLs use `?v=5` to avoid cached versions without the shared controls.
 Keep both shared assets and all preview modules synchronized with the canonical
 frontend public directory. Run `node scripts/check-diagram-preview.cjs` alongside
 the existing checks. No local application build is required.
+
+The description disclosure uses one shared summary, with a left-hand chevron
+that rotates when opened. Furniture and Paints no longer display the separate
+support label. TM Electronics, Furniture and Paints apply their backgrounds to
+the enclosing full-width project section, not just its inner article.
