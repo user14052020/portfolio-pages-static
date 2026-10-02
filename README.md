@@ -37,7 +37,7 @@ node scripts/check-dental-preview.cjs
 
 ## Calls / LLM Showcase
 
-All ten animated project previews share `project-previews/preview-styles.js`.
+All eleven animated project previews share `project-previews/preview-styles.js`.
 Shadow-root stylesheets are retained across renders. An inline paint gate keeps
 content hidden and unfocusable until every required stylesheet has loaded, with
 a bounded loading placeholder and an explicit retry state on network errors.
@@ -161,6 +161,30 @@ No local application build is required.
 node scripts/check-contracts-preview.cjs
 ```
 
+## Batches / 1C Showcase
+
+The `partiya-1c` home-page project replaces the gallery with four connected
+task blocks: batch passports and documents, expiry dates and FEFO, stock and
+reservations, and traceability with permitted CRM data. The scenes follow the
+description and all six original 1C screenshots. Original media remains on the
+standalone project page.
+
+A single fictional dataset drives production dates, remaining shelf life,
+warehouse balances, FEFO allocation, invoice reservations, shipments and CRM
+projections. Expired stock and other reservations are excluded from allocation;
+insufficient stock cannot produce a completed shipment. Warehouse and invoice
+quantity controls, document selection, keyboard navigation and playback work
+locally. The CRM view contains only permitted document metadata, not the audit
+log. No real 1C or CRM API is called. Playback pauses offscreen, in hidden tabs
+and during style loading; reduced motion displays the completed scene.
+
+Keep `party-1c.js`, `party-1c.css`, `party-host.css` and `Party1cPreview.tsx`
+synchronized with the canonical frontend. No local application build is needed.
+
+```powershell
+node scripts/check-party-preview.cjs
+```
+
 ## Furniture / 1C Support Showcase
 
 The `furniture` project uses `furniture-1c-preview`. Five connected task blocks
@@ -200,7 +224,7 @@ project profiles and the corresponding static data.
 
 ## Shared Diagram Heading
 
-All seven web-project previews and the Payments, Receipts and Contracts 1C previews display "What was delivered" ("Что было сделано")
+All seven web-project previews and the Payments, Receipts, Contracts and Batches 1C previews display "What was delivered" ("Что было сделано")
 above their task blocks. `project-diagram.js` and `project-diagram.css` render
 the shared distribution line and downward arrows, matching each preview's
 palette, column count and responsive breakpoints. Project actions and description

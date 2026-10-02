@@ -160,7 +160,7 @@ assert.equal(detachedRoot.children[3], slowLink);
 assert.equal(detachedRoot.children[2].hidden, false);
 assert.equal(root.children[2].hidden, false, 'Separate previews have independent state');
 
-for (const file of ['preview-styles.js', 'calls-llm.js', 'dental-crm.js', 'shifts-crm.js', 'eicom-shop.js', 'tm-electronics.js', 'furniture-1c.js', 'payments-1c.js', 'receipts-1c.js', 'contracts-1c.js']) {
+for (const file of ['preview-styles.js', 'calls-llm.js', 'dental-crm.js', 'shifts-crm.js', 'eicom-shop.js', 'tm-electronics.js', 'furniture-1c.js', 'payments-1c.js', 'receipts-1c.js', 'contracts-1c.js', 'party-1c.js']) {
   const source = read(file);
   assert.equal(source, fs.readFileSync(path.join(sourcePath, file), 'utf8'), `${file}: source and static mirror match`);
   if (file !== 'preview-styles.js') {
@@ -173,7 +173,7 @@ for (const file of ['preview-styles.js', 'calls-llm.js', 'dental-crm.js', 'shift
   }
 }
 assert.ok(read('eicom-shop.js').includes('[STYLESHEET, FEATURE_STYLESHEET, DIAGRAM_STYLESHEET]'), 'Eicom waits for all three style layers');
-for (const file of ['calls-llm.css', 'dental-crm.css', 'shifts-crm.css', 'tm-electronics.css', 'eicom-shop.css', 'eicom-improvements.css', 'furniture-1c.css', 'payments-1c.css', 'receipts-1c.css', 'contracts-1c.css']) {
+for (const file of ['calls-llm.css', 'dental-crm.css', 'shifts-crm.css', 'tm-electronics.css', 'eicom-shop.css', 'eicom-improvements.css', 'furniture-1c.css', 'payments-1c.css', 'receipts-1c.css', 'contracts-1c.css', 'party-1c.css']) {
   assert.equal(read(file), fs.readFileSync(path.join(sourcePath, file), 'utf8'), `${file}: source and static styles match`);
   assert.ok(read(file).includes('.case-intro'), `${file}: top project actions are styled`);
   assert.ok(!/\.case-footer|\.case-note/.test(read(file)), `${file}: no obsolete bottom action styling`);
