@@ -37,7 +37,7 @@ node scripts/check-dental-preview.cjs
 
 ## Calls / LLM Showcase
 
-All eight animated project previews share `project-previews/preview-styles.js`.
+All nine animated project previews share `project-previews/preview-styles.js`.
 Shadow-root stylesheets are retained across renders. An inline paint gate keeps
 content hidden and unfocusable until every required stylesheet has loaded, with
 a bounded loading placeholder and an explicit retry state on network errors.
@@ -109,6 +109,31 @@ with manual navigation. No local application build is required.
 
 ```powershell
 node scripts/check-payments-preview.cjs
+```
+
+## Receipts / 1C Showcase
+
+The `buh-self-employed-receipt` home-page project uses `receipts-1c-preview`
+instead of the screenshot gallery. Four connected blocks demonstrate source
+settings, a background task, attachment to a payment register, and the result
+log. The scenes are based on the project description and its two screenshots:
+receipt folder or log file, search period, date tolerance, file name formats,
+last processed log change, missing-receipt warnings and task completion.
+
+Fictional files and registers share one matching model. Changing the search
+period or date tolerance updates attachments, counters and log results.
+Hover, keyboard focus, tap, sample selection, log filters and playback controls
+are supported. Playback pauses offscreen, when the document is hidden, or until
+styles load. Reduced motion defaults to completed scenes with manual controls.
+There is no real file access or financial operation. Original descriptions and
+screenshots remain in the data and standalone project page.
+
+Keep `receipts-1c.js`, `receipts-1c.css`, `receipts-host.css` and the
+`Receipts1cPreview.tsx` wrapper synchronized with the canonical frontend.
+No local application build is required.
+
+```powershell
+node scripts/check-receipts-preview.cjs
 ```
 
 ## Furniture / 1C Support Showcase

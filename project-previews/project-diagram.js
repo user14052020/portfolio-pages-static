@@ -1,7 +1,7 @@
 import { ICONS as DIAGRAM_ICONS } from './tm-icons.js';
 
 export const DIAGRAM_STYLESHEET = new URL('./project-diagram.css?v=3', import.meta.url).href;
-const COLUMNS = { dental: 4, calls: 4, shifts: 4, tm: 7, eicom: 9, furniture: 5, payments: 4 };
+const COLUMNS = { dental: 4, calls: 4, shifts: 4, tm: 7, eicom: 9, furniture: 5, payments: 4, receipts: 4 };
 
 export function projectHeading(project, english = false) {
   const columns = COLUMNS[project];

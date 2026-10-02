@@ -1,0 +1,2 @@
+article:has(receipts-1c-preview)>div { width:100%; }
+receipts-1c-preview { display:block; min-width:0; }
