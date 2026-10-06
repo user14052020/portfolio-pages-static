@@ -25,9 +25,9 @@ button {letter-spacing:0;}
 .node-number {position:absolute;right:10px;bottom:9px;color:#a6b5bc;font-size:9px;}
 .node-wire {position:absolute;left:50%;top:100%;height:17px;border-left:1px solid #bdd0dc;}
 .feature-node button[aria-selected="true"]+.node-wire {border-color:var(--blue);}
-.bridge {position:relative;height:43px;margin:0 7.14%;border-top:1px solid #bdd0dc;transform:translateY(17px);}
+.bridge {position:relative;height:43px;margin:17px 7.14% 0;border-top:1px solid #bdd0dc;}
 .bridge::before {content:"";position:absolute;left:50%;top:0;height:20px;border-left:1px solid #a6c1d3;}
-.bridge span {position:absolute;left:calc(50% - 10px);top:12px;color:#7ba2bc;background:var(--project-surface,#f2f6f7);}
+.bridge span {position:absolute;display:grid;place-items:center;width:20px;height:20px;left:calc(50% - 10px);top:12px;color:#7ba2bc;background:var(--project-surface,#f2f6f7);}
 .bridge svg {width:20px;height:20px;}
 .detail-window {border:1px solid #d1dfe5;border-radius:8px;overflow:hidden;background:white;}
 .window-header {display:flex;align-items:center;gap:18px;padding:13px 18px;min-height:51px;border-bottom:1px solid var(--line);background:#fcfdfe;}

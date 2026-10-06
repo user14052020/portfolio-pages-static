@@ -2,7 +2,7 @@ import { ICONS } from './tm-icons.js';
 import { renderPreview, stopPreviewLoading } from './preview-styles.js?v=2';
 import { projectHeading, projectSummary, DIAGRAM_STYLESHEET } from './project-diagram.js?v=3';
 
-const CSS = new URL('./tm-electronics.css', import.meta.url).href;
+const CSS = new URL('./tm-electronics.css?v=1', import.meta.url).href;
 const ASSETS = new URL('./tm-assets/', import.meta.url).href;
 const DURATION = 10500;
 const FEATURES = [

@@ -92,9 +92,16 @@ preview.running = false; const stopped = preview.elapsed; preview.tick(7600); as
 assert.ok(source.includes("closest('button[data-feature]')"), 'Only feature tabs handle feature keyboard navigation');
 assert.ok(!/\bfetch\s*\(|XMLHttpRequest|<iframe|localStorage/.test(source));
 assert.ok(source.includes('disconnectedCallback()')); assert.ok(source.includes('prefers-reduced-motion'));
-assert.ok(read('project-previews/tm-electronics.css').includes('@container tm'));
+const css = read('project-previews/tm-electronics.css');
+assert.ok(css.includes('@container tm'));
+const bridgeRule = css.match(/\.bridge \{([^}]+)\}/)[1];
+assert.ok(bridgeRule.includes('margin:17px 7.14% 0'), 'Connector spacing must reserve room in the full-width blue canvas');
+assert.ok(!bridgeRule.includes('transform:'), 'The arrow must not shift over the white detail window');
+const arrowRule = css.match(/\.bridge span \{([^}]+)\}/)[1];
+assert.ok(arrowRule.includes('display:grid;place-items:center;width:20px;height:20px'), 'The arrow box must not gain a text baseline gap at mobile breakpoints');
+assert.ok(source.includes("new URL('./tm-electronics.css?v=1'"), 'Invalidate the cached connector stylesheet');
 for (const file of ['index.html', '404.html']) {
-  const html = read(file); assert.ok(html.includes('src="/project-previews/tm-electronics.js?v=6"'));
+  const html = read(file); assert.ok(html.includes('src="/project-previews/tm-electronics.js?v=7"'));
   const chunks = [...new Set(html.match(/app\/page-[a-f0-9]+\.js/g))]; assert.equal(chunks.length, 1);
   const chunk = read('_next/static/chunks/' + chunks[0]);
   assert.equal(chunks[0], `app/page-${crypto.createHash('sha256').update(chunk).digest('hex').slice(0, 16)}.js`);
